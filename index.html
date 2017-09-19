@@ -40,20 +40,24 @@
 </div>   
     
   <div id="container">
-    <div class="row" id="contentBox">
+    <div class="row" id="contentBox" onload="chat()">
 
 <!-- LeftContentin sisään kaikki vasemman puoliskon sisältö (Viestikenttä yms.).
     Nuolta klikkaamalla toinen puoli laajentuu ja toinen pienenee.  -->
     <div class="col-xs-12 col-sm-8" id="leftContent">
+      <span class="glyphicon glyphicon-menu-hamburger" id="menuBtn" onclick="openMenu()"></span>
       <span class="glyphicon glyphicon-menu-left" id="leftArrow" onclick="openDesk()"></span>
 
-      
+<!-- Tämän divin sisään menun sisältö -->
+    <div id="dropMenu">
+
+    </div>
 
 <!-- Tämän divin sisään tekstin kirjoituskenttä & lähetä nappi. -->
       <div class="input-group" id="sendMessage">
         <input id="textArea" type="text" class="form-control input-sm chat_input" placeholder="Write your message here..." />
         <span class="input-group-btn">
-          <button class="btn btn-primary btn-sm" id="sendBtn" onclick="#">Send</button>
+          <button class="btn btn-primary btn-sm" id="sendBtn" onclick="sendChatText()">Send</button>
         </span>
       </div>
     </div>
