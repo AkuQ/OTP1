@@ -1,11 +1,15 @@
+
 body {
-  background: url("../images/tausta.jpg");
+  background: url("../images/tausta.jpg") no-repeat center center fixed;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   overflow: hidden;
   margin: 0;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -ms-background-size: cover;
 }
 
 #contentBox {
@@ -74,6 +78,7 @@ color: #999999;
 #sendMessage {
   bottom: 20px;
   position: absolute;
+  margin-right: 15px;
 }
 
 #textArea {
