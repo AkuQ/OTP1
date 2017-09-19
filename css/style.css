@@ -1,3 +1,11 @@
+body { 
+  background: url(../images/tausta.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+/*
 body {
   background: url("../images/tausta.jpg");
   -webkit-user-select: none;
@@ -6,10 +14,10 @@ body {
   user-select: none;
   overflow: hidden;
   margin: 0;
-}
+} */
 
 #contentBox {
-  height: 700px;
+  height: 90%;
   width: 80%;
   background-color: rgba(0, 0, 0, 0.9);
   border: 1px solid #383838;
@@ -80,3 +88,125 @@ color: #999999;
   background-color: rgba(0,0,0, 0.7);
   border: 1px solid #383838;
 }
+
+#modal {
+    text-align: center;
+    position: fixed;
+    background: url(../images/tausta.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.modal-content {
+    background-color: rgb(0,0,0,0.6) !important;
+    height: 300px;
+    max-height: 100%;
+}
+
+
+
+
+
+.modal-body, .modal-header, .modal-footer {
+    border: none !important;
+} 
+
+
+#modal-title {
+    font-family: Bookman, serif;
+    font-size: 30px;
+    color: rgb(220,232,255);
+    letter-spacing: 3px;
+    
+}
+
+#main-menu {
+    min-width: 200px;   
+}
+
+#createRoom {
+    background-color: rgb(120,142,197);
+    margin-bottom: 5px;
+    border: 1px solid rgb(68,100,168);
+    font-size: 16px;
+    color:rgb(220,232,255);
+}
+
+#comment-glyphicon {
+    margin-right: 3px;
+}
+
+#logIn {
+    background-color: rgb(72,105,175);
+    border: 1px solid rgb(68,100,168);
+    font-size: 16px;
+    color: rgb(220,232,255);
+}
+
+#createRoom:hover {
+   text-decoration: none;
+    animation: flash 0.2s ease-out;
+}
+
+#logIn:hover {
+   text-decoration: none;
+    animation: flash2 0.2s ease-out;
+}
+
+@keyframes flash {
+    0%   {background-color: rgb(240, 240, 240);}
+    25%  {background-color: rgb(210,217,235);}
+    100% {background-color: rgb(120,142,197);}
+}
+
+@keyframes flash2 {
+    0%   {background-color: rgb(240, 240, 240);}
+    25%  {background-color: rgb(210,217,235);}
+    100% {background-color: rgb(72,105,175);}
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    display: block;
+}
+
+.invisible {
+    display: none;
+}
+
+.arrow {
+    color: #666666 !important;
+    font-size: 24px !important;
+}
+
+.arrow:hover {
+color: #999999 !important;
+}
+
+#roomName {
+    padding: 4px;
+    font-size: 16px;
+    width: 300px;
+    background-color: rgb(213,220,237);
+    max-width: 90%;
+    border: none;
+    color: rgb(39,53,88);
+}
+
+#CreateRoom-button {
+    background-color: rgb(120,142,197);
+    color:rgb(220,232,255);
+    border: 1px solid rgb(68,100,168);
+}
+
+#CreateRoom-button:hover {
+   text-decoration: none;
+    animation: flash 0.2s ease-out;
+}
+
+
