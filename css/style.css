@@ -5,16 +5,6 @@ body {
   -o-background-size: cover;
   background-size: cover;
 }
-/*
-body {
-  background: url("../images/tausta.jpg");
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  overflow: hidden;
-  margin: 0;
-} */
 
 #contentBox {
   height: 90%;
@@ -104,10 +94,6 @@ color: #999999;
     height: 300px;
     max-height: 100%;
 }
-
-
-
-
 
 .modal-body, .modal-header, .modal-footer {
     border: none !important;
