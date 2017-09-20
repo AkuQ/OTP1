@@ -26,11 +26,17 @@
       <div id="modalBody" class="modal-body">
         <div id="main-menu" class="btn-group-vertical" role="group" aria-label="Basic example">
           <button id="createRoom" type="button" class="btn flash createRoom"><span class="glyphicon glyphicon-plus"></span>  Create Room</button>
-          <button id="logIn" type="button" class="btn flash"><span id="comment-glyphicon" class="glyphicon glyphicon-comment"></span> Enter Room </button>
+          <button id="EnterRoom" type="button" class="btn flash"><span id="comment-glyphicon" class="glyphicon glyphicon-comment"></span> Enter Room </button>
             <form id="createRoomForm" class="form-inline">
             <input id="roomName" class="form-group" type="text" name="roomName" placeholder="Room name" maxlength="20">
             <button id="CreateRoom-button" class="btn btn-default" type="submit">Create</button>
                 </form>
+            <p id="short-roomName">Your room name is too short. At least five characters is required.</p>
+            <form id="chooseNameForm" class="form-inline">
+            <input id="username" class="form-group" type="text" placeholder="Choose a username" maxlength="20">
+            <button id="choosename-button" class="btn btn-default">Choose</button>
+            </form>
+            <p id="short-username">Your username is too short. At least five characters is required.</p>
         </div>
       </div>
       <div class="modal-footer">
