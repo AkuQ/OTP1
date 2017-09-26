@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <title>StormChat</title>
+</head>
+<body>
+  <div id="container">
+    <div class="row" id="contentBox" onload="chat()">
+
+<!-- LeftContentin sisään kaikki vasemman puoliskon sisältö (Viestikenttä yms.).
+    Nuolta klikkaamalla toinen puoli laajentuu ja toinen pienenee.  -->
+    <div class="col-xs-12 col-sm-8" id="leftContent">
+      <span class="glyphicon glyphicon-menu-hamburger" id="menuBtn" onclick="openMenu()"></span>
+      <span class="glyphicon glyphicon-menu-left" id="leftArrow" onclick="openDesk()"></span>
+
+<!-- Tämän divin sisään menun sisältö -->
+    <div id="dropMenu">
+
+    </div>
+
+<!-- Tämän divin sisään tekstin kirjoituskenttä & lähetä nappi. -->
+      <div class="input-group" id="sendMessage">
+        <input id="textArea" type="text" class="form-control input-sm chat_input" placeholder="Write your message here..." />
+        <span class="input-group-btn">
+          <button class="btn btn-primary btn-sm" id="sendBtn" onclick="sendChatText()">Send</button>
+        </span>
+      </div>
+    </div>
+
+
+<!-- Oikean puolen sisältö  -->
+    <div class="col-xs-0 col-sm-4" id="rightContent">
+      <span class="glyphicon glyphicon-menu-right" id="rightArrow" onclick="closeDesk()"></span>
+    </div>
+
+
+  </div>
+</div>
+  <script src="js/expand.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>
