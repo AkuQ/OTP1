@@ -13,8 +13,8 @@ body {
 }
 
 #contentBox {
-  height: 700px;
-  width: 80%;
+  height: 100%;
+  width: 100%;
   background-color: rgba(0, 0, 0, 0.9);
   border: 1px solid #383838;
   border-radius: 5px;
