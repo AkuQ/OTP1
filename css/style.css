@@ -93,7 +93,7 @@ color: #999999;
 
 #textArea {
   background-color: rgba(0,0,0, 0.7);
-  border: 1px solid #383838;
+  border: 2px solid rgb(80,80,80);
   width: 100%;
   margin: auto;
   color: white;
@@ -270,3 +270,35 @@ color: #999999;
 .menu:hover .tooltiptext {
     visibility: visible;
 }
+
+#users {
+    color:rgb(0, 130 ,0);
+}
+
+#users:hover {
+    color: rgb(0,200, 0);
+}
+
+#users-amount {
+    color: rgb(230,230,230);
+    font-size: 18px;
+}
+
+#chat-area {
+    height: 75%;
+    width: 100%;
+    border: 2px solid rgb(80,80,80);
+    margin-top: 35px;
+    
+}
+
+p {
+    font-size: 12px;
+    color: white;
+    
+}
+
+.scrollable {
+    overflow: auto
+}
+
