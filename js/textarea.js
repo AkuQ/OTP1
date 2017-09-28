@@ -1,0 +1,12 @@
+$(function()
+{
+    $('.scrollable')
+        .jScrollPane()
+        .bind(
+            'mousewheel',
+            function(e)
+            {
+                e.preventDefault();
+            }
+        );
+});
