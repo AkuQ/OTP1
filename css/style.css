@@ -96,6 +96,7 @@ color: #999999;
   border: 1px solid #383838;
   width: 100%;
   margin: auto;
+  color: white;
 }
 
 #modal {
@@ -215,15 +216,16 @@ color: #999999 !important;
 }
 
 
-#menuBtn {
+.menu {
   display: inline-block;
   font-size: 1.8em;
   float: left;
   color: #666666;
   width: 1.5em;
+  margin-right: 7px;
 }
 
-#menuBtn:hover {
+.menu:hover {
 color: #999999;
 }
 
@@ -242,4 +244,29 @@ color: #999999;
 #short-username, #short-roomName {
     margin-top: 10px;
     color: white;
+}
+/*
+.tooltip {
+    position: relative;
+    display: inline-block;
+} */
+
+.menu .tooltiptext {
+    visibility: hidden;
+    width: 50px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 2px 0;
+    font-size: 12px;
+    /* Position the tooltip */
+    position: absolute;
+    top: 30px;
+    right: 5px;
+    z-index: 1;
+}
+
+.menu:hover .tooltiptext {
+    visibility: visible;
 }
