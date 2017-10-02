@@ -51,34 +51,46 @@
 <!-- LeftContentin sisään kaikki vasemman puoliskon sisältö (Viestikenttä yms.).
     Nuolta klikkaamalla toinen puoli laajentuu ja toinen pienenee.  -->
     <div class="col-xs-12 col-sm-8" id="leftContent">
-    <span class="glyphicon glyphicon glyphicon-user menu" id="users"><span id="users-amount">5</span></span>
+    <span class="glyphicon glyphicon glyphicon-user menu" id="users"><span id="users-amount">4</span><span class="tooltiptext">Users</span></span>
       <span class="glyphicon glyphicon-menu-hamburger menu" id="menuBtn"></span>
         <span class="glyphicon glyphicon-log-out menu" id="logout"><span class="tooltiptext">Logout</span></span>
       <span class="glyphicon glyphicon-menu-left" id="leftArrow" onclick="openDesk()"></span>
 
 <!-- keskustelualue. Käyttäjät-napista vaihtuu listaan ryhmän käyttäjistä. -->
     <div id="chat-area" class="scrollable">
+        <div id="messages">
+        <p>Tuomas: aa sfsafasff fafafasffsf sgsdgsdgsdgs sgsdgdsgsdgsdg nfhfhdf fafasfsafas dsfsdfsdfsdfsd sdfdsfsdfsdfsdfdsf sdfsdfsdfdssdfsdfdvxvxzvzkx zkcjxcjkz  jcixzcjizxcjzxjcixzcjizxcj ixzjcizxci</p>
+        <p>Janne:</p>
+        <p>Akseli:</p>
+        <p>Arto:</p>
         <p>Tuomas:</p>
         <p>Janne:</p>
-        <p>Sami:</p>
+        <p>Akseli:</p>
+        <p>Arto:</p>
         <p>Tuomas:</p>
         <p>Janne:</p>
-        <p>Sami:</p>
+        <p>Akseli:</p>
+        <p>Arto:</p>
         <p>Tuomas:</p>
         <p>Janne:</p>
-        <p>Sami:</p>
+        <p>Akseli:</p>
+        <p>Arto:</p>
         <p>Tuomas:</p>
         <p>Janne:</p>
-        <p>Sami:</p>
+        <p>Akseli:</p>
+        <p>Arto:</p>
         <p>Tuomas:</p>
         <p>Janne:</p>
-        <p>Sami:</p>
+        <p>Akseli:</p>
+        <p>Arto:</p>
         <p>Tuomas:</p>
-        <p>Janne:</p>
-        <p>Sami:</p>
-        <p>Tuomas:</p>
-        <p>Janne:</p>
-        <p>Sami:</p>
+        </div>
+        <div id="group-users">
+            <p>Tuomas</p>
+            <p>Janne</p>
+            <p>Akseli</p>
+            <p>Arto</p>
+        </div>
     </div>
 
 <!-- Tämän divin sisään tekstin kirjoituskenttä & lähetä nappi. -->
@@ -105,11 +117,8 @@
     <script src="js/cors-test.js"></script>
   <script src="js/chat.js"></script>
     <script src="js/menu.js"></script>
-    <script src="js/textarea.js"></script>
-    <!-- the mousewheel plugin - optional to provide mousewheel support -->
-<script type="text/javascript" src="js/jquery.mousewheel.js"></script>
-
-<!-- the jScrollPane script -->
-<script type="text/javascript" src="js/jquery.scrollpane.min.js"></script>
+    <script src="js/chat-area.js"></script>
+    <script src="js/jquery.nicescroll.min.js"></script> 
+    <script></script>
 </body>
 </html>
