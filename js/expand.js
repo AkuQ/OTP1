@@ -14,11 +14,3 @@ function closeDesk() {
     console.log("Chat window maximized");
     changed = true;
 }
-
-function openMenu() {
-    document.getElementById("dropMenu").style.display = "inline-block";
-}
-
-function closeMenu() {
-    document.getElementById("dropMenu").style.display = "none";
-}
