@@ -1,19 +1,12 @@
 
 function openDesk() {
-    document.getElementById("leftContent").className = "col-xs-0 col-sm-4";
+    document.getElementById("leftContent").className = "hidden-xs col-sm-4";
     document.getElementById("rightContent").className = "col-xs-12 col-sm-8";
-   //scrollbarToggle();
+    console.log("Chat window minimized");
 }
 
 function closeDesk() {
     document.getElementById("leftContent").className = "col-xs-12 col-sm-8";
-    document.getElementById("rightContent").className = "col-xs-0 col-sm-4";
-   // scrollbarToggle();
+    document.getElementById("rightContent").className = "hidden-xs col-sm-4";
+    console.log("Chat window maximized");
 }
-/*
-function scrollbarToggle() {
-    $('.scrollable').getNiceScroll().hide();
-    $('.scrollable').delay(1000);
-    $('.scrollable').getNiceScroll().resize();
-    $('.scrollable').getNiceScroll().show();
-}  */
