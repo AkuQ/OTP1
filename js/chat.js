@@ -1,12 +1,12 @@
 var userName = $(".username").val();
-var chatID = //TÄHÄN LISTA JOHON TALLETETAAN CHAT IIDEET
+var chatID; //TÄHÄN LISTA JOHON TALLETETAAN CHAT IIDEET
 var lastMessage;
 /*window.onload = function(){
   var start = setInterval(updateMessages, 2000);
 }*/
 
 var getTime = function(){
-  $.get("/getTime", function(data){
+  $.get("10.114.34.17/api/getTime", function(data){
     return data;
   })
 }
@@ -18,7 +18,7 @@ var createUser = function(){
 
   $.ajax({
     type: "POST",
-    url: "/users/create",
+    url: "10.114.34.17/api/users/create",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
@@ -35,7 +35,7 @@ var listUsers = function(){
 
   $.ajax({
     type: "POST",
-    url: "/users/list",
+    url: "10.114.34.17/api/users/list",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
@@ -54,7 +54,7 @@ var createRoom = function(){
 
   $.ajax({
     type: "POST",
-    url: "/rooms/create",
+    url: "10.114.34.17/api/rooms/create",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
@@ -72,7 +72,7 @@ var listRooms = function(){
 
   $.ajax({
     type: "POST",
-    url: "/rooms/list",
+    url: "10.114.34.17/api/rooms/list",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
@@ -86,12 +86,12 @@ var updateMessages = function(){
   console.log("updateMessages() kutsuttu")
   var sendInfo = {
       chat_id: chatID,
-      since: lastmessage
+      since: lastMessage
     }
 
   $.ajax({
     type: "POST",
-    url: "/messages/list",
+    url: "10.114.34.17/api/messages/list",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
@@ -110,7 +110,7 @@ var sendMessage = function(){
 
   $.ajax({
     type: "POST",
-    url: "/messages/post",
+    url: "10.114.34.17/api/messages/post",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
