@@ -1,5 +1,9 @@
 var userName = $(".username").val();
-var chatID = $("#").val();
+var chatID = //TÄHÄN LISTA JOHON TALLETETAAN CHAT IIDEET
+var lastMessage;
+/*window.onload = function(){
+  var start = setInterval(updateMessages, 2000);
+}*/
 
 var getTime = function(){
   $.get("/getTime", function(data){
@@ -15,53 +19,7 @@ var createUser = function(){
   $.ajax({
     type: "POST",
     url: "/users/create",
-    data: JSON.stringify(sendInfo)
-    contentType: "application/json",
-    dataType:"json",
-    success: function (data) {
-      console.log(data);
-    }
-  })
-}
-var createRoom = function(){
-  var sendInfo = {
-    name: userName
-    password: $("#").val();
-  };
-
-  $.ajax({
-    type: "POST",
-    url: "/rooms/create",
-    data: JSON.stringify(sendInfo)
-    contentType: "application/json",
-    dataType:"json",
-    success: function (data) {
-      console.log(data);
-    }
-  })
-}
-var listRooms = function(){
-  var sendInfo = {
-    name: userName
-    password: $("#").val();
-  };
-
-  $.ajax({
-    type: "POST",
-    url: "/rooms/list",
-    data: JSON.stringify(sendInfo)
-    contentType: "application/json",
-    dataType:"json",
-    success: function (data) {
-      console.log(data);
-    }
-  })
-}
-
-var roomList = function(){
-  $.ajax({
-    type: "POST",
-    url: "/users/create",
+    data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
     success: function (data) {
@@ -72,13 +30,13 @@ var roomList = function(){
 
 var listUsers = function(){
   var sendInfo = {
-      chat_id: $("#").val();
-  };
+      chat_id: $("#").val()
+    }
 
   $.ajax({
     type: "POST",
     url: "/users/list",
-    data: JSON.stringify(sendInfo)
+    data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
     success: function (data) {
@@ -86,16 +44,55 @@ var listUsers = function(){
     }
   })
 }
-var updateList = function(){
+
+
+var createRoom = function(){
   var sendInfo = {
-      chat_id: ChatID;
-      since: //lastmessage
-  };
+    name: userName,
+    password: $("#").val()
+    }
+
+  $.ajax({
+    type: "POST",
+    url: "/rooms/create",
+    data: JSON.stringify(sendInfo),
+    contentType: "application/json",
+    dataType:"json",
+    success: function (data) {
+      console.log(data);
+    }
+  })
+}
+
+var listRooms = function(){
+  var sendInfo = {
+    name: userName,
+    password: $("#").val()
+  }
+
+  $.ajax({
+    type: "POST",
+    url: "/rooms/list",
+    data: JSON.stringify(sendInfo),
+    contentType: "application/json",
+    dataType:"json",
+    success: function (data) {
+      console.log(data);
+    }
+  })
+}
+
+var updateMessages = function(){
+  console.log("updateMessages() kutsuttu")
+  var sendInfo = {
+      chat_id: chatID,
+      since: lastmessage
+    }
 
   $.ajax({
     type: "POST",
     url: "/messages/list",
-    data: JSON.stringify(sendInfo)
+    data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
     success: function (data) {
@@ -103,24 +100,25 @@ var updateList = function(){
     }
   })
 }
+
 var sendMessage = function(){
   var sendInfo = {
-    user_id: $("#").val();
-    chat_id: chatID;
-    message: $("#textArea").val();
-  };
+    user_id: $("#").val(),
+    chat_id: chatID,
+    message: $("#textArea").val(),
+  }
 
   $.ajax({
     type: "POST",
     url: "/messages/post",
-    data: JSON.stringify(sendInfo)
+    data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
     success: function (data) {
       console.log(data);
     }
   })
-  updateList();
+  updateMessages();
 }
 /* ESIMERKKI PALUUDATAN KÄSITTELYYN
   $.ajax({
