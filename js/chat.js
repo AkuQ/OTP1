@@ -1,18 +1,6 @@
 var userName = $(".username").val();
 var chatID = $("#").val();
 
-var test = function(){
-  $.ajax({
-    url: 'http://jsonplaceholder.typicode.com/users',
-    type: 'GET',
-    dataType: 'json'
-  }).then(function(data) {
-    $.each(data.users, function (i, user){
-      console.log(data);
-    })
-  });
-}
-
 var getTime = function(){
   $.get("/getTime", function(data){
     return data;
@@ -98,7 +86,7 @@ var listUsers = function(){
     }
   })
 }
-var messageList = function(){
+var updateList = function(){
   var sendInfo = {
       chat_id: ChatID;
       since: //lastmessage
@@ -132,10 +120,9 @@ var sendMessage = function(){
       console.log(data);
     }
   })
+  updateList();
 }
-/*
-var getUsersG = function() {
-  console.log("getUsers() called")
+/* ESIMERKKI PALUUDATAN KÄSITTELYYN
   $.ajax({
        type: "GET",
        url: "http://api.avoindata.net/users", //API for test use
@@ -148,7 +135,5 @@ var getUsersG = function() {
   		// tee mitä haluat jokaiselle
       		$("#userlist").append("<li>" +user.handle+ "</li>");
   	     });
-        }
-  });
-};
+       })
 */
