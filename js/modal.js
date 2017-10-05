@@ -12,13 +12,13 @@ $("#createRoom").click(function() {
 
 $('#back-arrow').click(function() {
     $('#short-roomName, #short-username').clearQueue();
-    $('#createRoomForm, #chooseNameForm, #short-roomName, #short-username').fadeOut(150);
+    $('#createRoomForm, #chooseNameForm, #short-roomName, #short-username, #createdRooms').fadeOut(150);
     $('#back-arrow').addClass('invisible');
     $('#createRoom, #EnterRoom').delay(150).fadeIn(150);
 });
 
 $('#EnterRoom').click(function() {
-    $('#chooseNameForm').delay(150).fadeIn(150);
+    $('#createdRooms').delay(150).fadeIn(150);
     $('#back-arrow').removeClass('invisible');
     $('#createRoom, #EnterRoom').fadeOut(150); 
 });
@@ -40,6 +40,15 @@ $('#CreateRoom-button').click(function() {
         $('#short-roomName').delay(5000).fadeOut(150);
     }
 });
+
+$('ul li').click(function() {
+    if ($('ul li').hasClass('roomSelected')) {
+        $('ul li').removeClass('roomSelected');
+        $('ul li').addClass('listedRoom-hover');
+    }
+    $(this).toggleClass('roomSelected');
+    $(this).removeClass('listedRoom-hover');
+})
     
 
 $("#createRoomForm,#chooseNameForm").submit(function(e){
@@ -50,4 +59,4 @@ $("#createRoomForm,#chooseNameForm").submit(function(e){
 
 $('#modal').modal('show');
 
-$('#createRoomForm, #chooseNameForm, #short-username, #short-roomName').hide();
+$('#createRoomForm, #chooseNameForm, #short-username, #short-roomName, #createdRooms').hide();

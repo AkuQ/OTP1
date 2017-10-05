@@ -10,11 +10,3 @@ function closeDesk() {
     document.getElementById("rightContent").className = "hidden-xs col-sm-4";
     console.log("Chat window maximized");
 }
-
-function openMenu() {
-    document.getElementById("dropMenu").style.display = "inline-block";
-}
-
-function closeMenu() {
-    document.getElementById("dropMenu").style.display = "none";
-}
