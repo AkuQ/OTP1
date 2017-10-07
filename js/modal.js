@@ -8,6 +8,7 @@ $("#createRoom").click(function() {
     $('#back-arrow').removeClass('invisible');
     $('#createRoom, #EnterRoom').fadeOut(150); 
     $("#roomName, #roomPassword, #roomPasswordAgain").val('');
+    $('#CreateRoom-button').prop('disabled', true);
     
 }); 
 
@@ -17,7 +18,7 @@ $('#back-arrow').click(function() {
     $('#back-arrow').addClass('invisible');
     $('#createRoom, #EnterRoom').delay(150).fadeIn(150);
     $('ul li').removeClass('roomSelected');
-    $('#chooseRoom-button,#createRoom-button').prop('disabled', true);
+    $('#chooseRoom-button, #CreateRoom-button').prop('disabled', true);
     
 });
 
@@ -65,7 +66,7 @@ $('#createRoomForm, #chooseNameForm, #short-username, #short-roomName, #createdR
 $('#chooseRoom-button, #CreateRoom-button').prop('disabled', true);
 
 $('#roomName').focusout(function() {
-    if ($('#roomName').val().length <= 5) {
+    if ($('#roomName').val().length <= 4) {
         $('#roomName-errors').clearQueue();
         $('#roomName-errors').fadeIn(150).html('<p>Your room name is too short. At least five characters is required.</p>');
         $('#roomName-errors').delay(5000).fadeOut(150);
@@ -73,7 +74,7 @@ $('#roomName').focusout(function() {
 });
 
 $('#roomPassword').focusout(function() {
-    if ($('#roomPassword').val().length <= 5) {
+    if ($('#roomPassword').val().length <= 4) {
         $('#roomName-errors').clearQueue();
         $('#roomName-errors').fadeIn(150).html('<p>Your password is too short. At least five characters is required.</p>');
         $('#roomName-errors').delay(5000).fadeOut(150);
