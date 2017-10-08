@@ -1,4 +1,5 @@
 var userName = $(".username").val();
+var userID;
 var chatID; //TÄHÄN LISTA JOHON TALLETETAAN CHAT IIDEET
 var lastMessage;
 /*window.onload = function(){
@@ -12,6 +13,8 @@ var getTime = function(){
 }
 
 var createUser = function(){
+  var authToken;
+  var userID;
   var sendInfo = {
     Name : userName
   };
@@ -24,6 +27,8 @@ var createUser = function(){
     dataType:"json",
     success: function (data) {
       console.log(data);
+      this.userID = data.id;
+      this.authToken = data.token;
     }
   })
 }
@@ -94,9 +99,11 @@ var updateMessages = function(){
     url: "10.114.34.17/api/messages/list",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
-    dataType:"json",
+    dataType: "json",
     success: function (data) {
-      console.log(data);
+      // console.log(data);
+      $.each(data.message, function (i, message) {
+      $("#messages").append("<li>" + i + "</li>");
     }
   })
 }
