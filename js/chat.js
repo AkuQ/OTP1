@@ -6,13 +6,13 @@ var lastMessage;
   var start = setInterval(updateMessages, 2000);
 }*/
 
-var getTime = function(){
+function getTime(){
   $.get("10.114.34.17/api/getTime", function(data){
     return data;
   })
 }
 
-var createUser = function(){
+function createUser(){
   var authToken;
   var userID;
   var sendInfo = {
@@ -33,7 +33,7 @@ var createUser = function(){
   })
 }
 
-var listUsers = function(){
+function listUsers(){
   var sendInfo = {
       chat_id: $("#").val()
     }
@@ -50,8 +50,7 @@ var listUsers = function(){
   })
 }
 
-
-var createRoom = function(){
+function createRoom(){
   var sendInfo = {
     name: userName,
     password: $("#").val()
@@ -69,7 +68,7 @@ var createRoom = function(){
   })
 }
 
-var listRooms = function(){
+function listRooms(){
   var sendInfo = {
     name: userName,
     password: $("#").val()
@@ -87,7 +86,7 @@ var listRooms = function(){
   })
 }
 
-var updateMessages = function(){
+function updateMessages(){
   console.log("updateMessages() kutsuttu")
   var sendInfo = {
       chat_id: chatID,
@@ -108,7 +107,7 @@ var updateMessages = function(){
   })
 }
 
-var sendMessage = function(){
+function sendMessage(){
   var sendInfo = {
     user_id: $("#").val(),
     chat_id: chatID,
@@ -127,18 +126,3 @@ var sendMessage = function(){
   })
   updateMessages();
 }
-/* ESIMERKKI PALUUDATAN KÄSITTELYYN
-  $.ajax({
-       type: "GET",
-       url: "http://api.avoindata.net/users", //API for test use
-       dataType: 'json',
-       cache: false,
-       success: function(data)
-        {
-          // JSON sisältää kaksi objektia: users ja rights
-          $.each(data.users, function (i, user) {
-  		// tee mitä haluat jokaiselle
-      		$("#userlist").append("<li>" +user.handle+ "</li>");
-  	     });
-       })
-*/
