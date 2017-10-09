@@ -1,5 +1,6 @@
 describe('expand', function () {
 
-  it("changed should be "true" when using opendDesk() or closeDesk()", function () {
-      expect(changed).toBe(true);
+  it("changed should be 'false' before using opendDesk() or closeDesk()", function () {
+      expect(changed).toBe(false);
   });
+});
