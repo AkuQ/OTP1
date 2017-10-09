@@ -13,7 +13,7 @@
 
     <title>StormChat</title>
 </head>
-<body> 
+<body>
     <!-- Modal -->
   <div id="modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -21,14 +21,14 @@
       <div class="modal-header">
         <span id="back-arrow" class="glyphicon glyphicon-menu-left btn invisible arrow"></span>
         <span class="modal-title" id="modal-title">StormChat</span>
-        <span class="glyphicon glyphicon-menu-right btn invisible arrow"></span>  
+        <span class="glyphicon glyphicon-menu-right btn invisible arrow"></span>
       </div>
       <div id="modalBody" class="modal-body">
         <div id="main-menu" class="btn-group-vertical" role="group" aria-label="Basic example">
             <!-- aloitusvalinnat -->
           <button id="createRoom" type="button" class="btn flash createRoom"><span class="glyphicon glyphicon-plus"></span>  Create Room</button>
           <button id="EnterRoom" type="button" class="btn flash"><span id="comment-glyphicon" class="glyphicon glyphicon-comment"></span> Enter Room </button>
-            
+
             <!--1 Huoneen luonti -->
             <form id="createRoomForm">
             <input id="roomName" class="form-group" type="text" name="roomName" placeholder="Room name" maxlength="20">
@@ -37,14 +37,14 @@
             <button id="CreateRoom-button" class="btn btn-default" type="submit">Create</button>
                 </form>
             <p id="short-roomName">Your room name is too short. At least five characters is required.</p>
-            
+
             <!--2 Huoneeseen liittyminen -->
             <ul id="createdRooms">
                 <p>Choose a Room to join</p>
                 <li class="listedRoom listedRoom-hover">TestiHuone</li>
                 <li class="listedRoom listedRoom-hover">ToinenTestiHuone</li>
                 <button id="chooseRoom-button">Enter</button>
-            </ul>  
+            </ul>
            <!--
             <table id="createdRooms">
                 <tr>
@@ -61,24 +61,24 @@
                 <tr>
                     <td><button id="chooseRoom-button">Enter</button></td>
                 </tr>
-                
+
             </table>  -->
-            
+
             <!--2 Huoneen valinnan jälkeen valitaan nimi -->
             <form id="chooseNameForm" class="form-inline">
             <input id="username" class="form-group" type="text" placeholder="Choose a username" maxlength="20">
             <button id="choosename-button" class="btn btn-default">Choose</button>
             </form>
             <p id="short-username">Your username is too short. At least five characters is required.</p>
-            
+
         </div>
       </div>
       <div class="modal-footer">
       </div>
     </div>
   </div>
-</div>   
-    
+</div>
+
   <div id="container">
     <div class="row" id="contentBox" onload="chat()">
 
@@ -132,7 +132,7 @@
       <div class="input-group" id="sendMessage">
         <input id="textArea" type="text" class="form-control input-sm chat_input" placeholder="Write your message here..." />
         <span class="input-group-btn">
-          <button class="btn btn-primary btn-sm" id="sendBtn" onclick="sendChatText()">Send</button>
+          <button class="btn btn-primary btn-sm" id="sendBtn" onclick="sendMessage()">Send</button>
         </span>
       </div>
     </div>
@@ -153,9 +153,9 @@
   <script src="js/chat.js"></script>
     <script src="js/menu.js"></script>
     <script src="js/chat-area.js"></script>
-    <script src="js/jquery.nicescroll.js"></script> 
+    <script src="js/jquery.nicescroll.js"></script>
     <script>
-      
+
     </script>
 </body>
 </html>
