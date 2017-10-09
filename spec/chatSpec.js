@@ -1,15 +1,16 @@
-describe('Chat', function () {
-  var chat;
+/*
+describe('Chat.js', function () {
 
-  beforeEach(function() {
-    this.chat = new Chat();
+  it("check, that 'sendMessage' is defined", function() {
+    expect(this.sendMessage).toBeDefined();
   });
 
-  it("check, that 'sendChatText' is defined", function() {
-    expect( this.chat.sendChatText ).toBeDefined();
+  it("check, that 'updateMessages' exists and is function", function() {
+    expect(window.updateMessages).toEqual(jasmine.any(Function));
   });
 
-  it("check, that 'request' exists and is function", function() {
-    expect(this.chat.request).toEqual(jasmine.any(Function));
+  it("check, that 'createUser' exists and is function", function() {
+    expect(window.createUser).toEqual(jasmine.any(Function));
   });
 });
+*/
