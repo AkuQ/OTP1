@@ -103,13 +103,14 @@ function updateMessages(){
       // console.log(data);
       $.each(data.message, function (i, message) {
       $("#messages").append("<li>" + i + "</li>");
+      })
     }
   })
 }
 
 function sendMessage(){
   var sendInfo = {
-    user_id: $("#").val(),
+  //  user_id: $("#").val(),
     chat_id: chatID,
     message: $("#textArea").val(),
   }
