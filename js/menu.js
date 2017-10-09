@@ -1,8 +1,8 @@
-$('#logout').hide();
+$('#logout, #download').hide();
 
 $('#menuBtn').click(function() {
     $(this).toggleClass('pressed');
-    $('#logout').fadeToggle(200);
+    $('#logout, #download').fadeToggle(200);
 });
 
 $('#users').click(function() {
