@@ -1,7 +1,7 @@
-var userName = $(".username").val();
 var userID;
 var chatID; //TÄHÄN LISTA JOHON TALLETETAAN CHAT IIDEET
 var lastMessage;
+var userName = "testUser";//$('#username').val();
 /*window.onload = function(){
   var start = setInterval(updateMessages, 2000);
 }*/
@@ -16,7 +16,7 @@ function createUser(){
   var authToken;
   var userID;
   var sendInfo = {
-    Name : userName
+    Name : this.userName
   };
 
   $.ajax({
@@ -35,7 +35,7 @@ function createUser(){
 
 function listUsers(){
   var sendInfo = {
-      chat_id: $("#").val()
+      chat_id: this.chatID
     }
 
   $.ajax({
@@ -46,14 +46,17 @@ function listUsers(){
     dataType:"json",
     success: function (data) {
       console.log(data);
+      $.each(data.name, function (i, name) {
+      $("#group-users").append("<li>" + i + "</li>");
+      })
     }
   })
 }
 
 function createRoom(){
   var sendInfo = {
-    name: userName,
-    password: $("#").val()
+    name: $("#roomName").val(),
+    password: $("#roomPassword").val()
     }
 
   $.ajax({
@@ -64,6 +67,7 @@ function createRoom(){
     dataType:"json",
     success: function (data) {
       console.log(data);
+      this.chatID = data.result;
     }
   })
 }
