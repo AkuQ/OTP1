@@ -5,13 +5,13 @@ var lastMessage;
   var start = setInterval(updateMessages, 2000);
 }*/
 
-var getTime = function(){
+function getTime(){
   $.get("10.114.34.17/api/getTime", function(data){
     return data;
   })
 }
 
-var createUser = function(){
+function createUser(){
   var sendInfo = {
     Name : userName
   };
@@ -28,7 +28,7 @@ var createUser = function(){
   })
 }
 
-var listUsers = function(){
+function listUsers(){
   var sendInfo = {
       chat_id: $("#").val()
     }
@@ -46,7 +46,7 @@ var listUsers = function(){
 }
 
 
-var createRoom = function(){
+function createRoom(){
   var sendInfo = {
     name: userName,
     password: $("#").val()
@@ -64,7 +64,7 @@ var createRoom = function(){
   })
 }
 
-var listRooms = function(){
+function listRooms(){
   var sendInfo = {
     name: userName,
     password: $("#").val()
@@ -81,8 +81,7 @@ var listRooms = function(){
     }
   })
 }
-
-var updateMessages = function(){
+function updateMessages(){
   console.log("updateMessages() kutsuttu")
   var sendInfo = {
       chat_id: chatID,
@@ -100,8 +99,7 @@ var updateMessages = function(){
     }
   })
 }
-
-var sendMessage = function(){
+function sendMessage(){
   var sendInfo = {
     user_id: $("#").val(),
     chat_id: chatID,
