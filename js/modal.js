@@ -19,6 +19,7 @@ $('#back-arrow').click(function() {
     $('#createRoom, #EnterRoom').delay(150).fadeIn(150);
     $('ul li').removeClass('roomSelected');
     $('#chooseRoom-button, #CreateRoom-button').prop('disabled', true);
+    $('ul li').addClass('listedRoom-hover');
     
 });
 
@@ -39,7 +40,7 @@ $('#choosename-button').click(function() {
 
 $('#CreateRoom-button').click(function() {
     
-    $('#modal').modal('toggle');
+    $('#modal').modal('toggle'); 
 });
 
 $('ul li').click(function() {
@@ -80,16 +81,6 @@ $('#roomPassword').focusout(function() {
         $('#roomName-errors').delay(5000).fadeOut(150);
     } 
 });
-/*
-$('#roomPasswordAgain').focusout(function() {
-    if ($('#roomPassword').val() !=  $('#roomPasswordAgain').val()) {
-        $('#roomName-errors').clearQueue();
-        $('#roomName-errors').fadeIn(150).html('<p>The passwords don`t match.</p>');
-        $('#roomName-errors').delay(5000).fadeOut(150);
-    } else {
-    console.log('match');
-    }
-}); */
 $('#roomPasswordAgain').keyup(function() {
     if ($('#roomName').val().length >= 5 && $('#roomPassword').val().length >= 5 && $('#roomPassword').val() ==  $('#roomPasswordAgain').val()) {
     $('#CreateRoom-button').prop('disabled', false);

@@ -53,6 +53,7 @@ function listUsers(){
   })
 }
 
+
 function createRoom(){
   var sendInfo = {
     name: $("#roomName").val(),

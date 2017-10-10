@@ -92,6 +92,10 @@ color: #999999;
     background-color: rgb(72,105,175);
 }
 
+#sendBtn:hover {
+    background-color: rgb(92,125,195);
+}
+
 #textArea {
   background-color: rgba(0,0,0, 0.7);
   border: 2px solid rgb(80,80,80);
@@ -351,6 +355,7 @@ ul {
     font-size: 18px;
     font-family: Bookman, serif;
     margin: 15px 0;
+    border: 1px solid rgba(120,142,197,0);
 }
 
 .listedRoom-hover:hover {
