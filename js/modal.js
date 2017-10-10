@@ -40,9 +40,7 @@ $('#choosename-button').click(function() {
 
 $('#CreateRoom-button').click(function() {
     
-    //$('#modal').modal('toggle'); 
-    $('#createRoomForm').fadeOut(150);
-    $('#chooseNameFrom').delay(150).fadeIn(150);
+    $('#modal').modal('toggle'); 
 });
 
 $('ul li').click(function() {
