@@ -71,6 +71,7 @@ function createRoom(){
       this.chatID = data.result;
     }
   })
+  createUser();
 }
 
 function listRooms(){
