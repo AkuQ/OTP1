@@ -1,5 +1,5 @@
 //This is for Jasmine test
-var changed = new Boolean(false);
+var changed = false;
 
 function openDesk() {
     document.getElementById("leftContent").className = "hidden-xs col-sm-4";
