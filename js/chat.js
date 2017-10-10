@@ -1,4 +1,5 @@
 var userName = $(".username").val();
+var userID;
 var chatID; //TÄHÄN LISTA JOHON TALLETETAAN CHAT IIDEET
 var lastMessage;
 /*window.onload = function(){
@@ -12,6 +13,8 @@ function getTime(){
 }
 
 function createUser(){
+  var authToken;
+  var userID;
   var sendInfo = {
     Name : userName
   };
@@ -24,6 +27,8 @@ function createUser(){
     dataType:"json",
     success: function (data) {
       console.log(data);
+      this.userID = data.id;
+      this.authToken = data.token;
     }
   })
 }
@@ -81,6 +86,7 @@ function listRooms(){
     }
   })
 }
+
 function updateMessages(){
   console.log("updateMessages() kutsuttu")
   var sendInfo = {
@@ -93,15 +99,19 @@ function updateMessages(){
     url: "10.114.34.17/api/messages/list",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
-    dataType:"json",
+    dataType: "json",
     success: function (data) {
-      console.log(data);
+      // console.log(data);
+      $.each(data.message, function (i, message) {
+      $("#messages").append("<li>" + i + "</li>");
+      })
     }
   })
 }
+
 function sendMessage(){
   var sendInfo = {
-    user_id: $("#").val(),
+  //  user_id: $("#").val(),
     chat_id: chatID,
     message: $("#textArea").val(),
   }
@@ -118,18 +128,3 @@ function sendMessage(){
   })
   updateMessages();
 }
-/* ESIMERKKI PALUUDATAN KÄSITTELYYN
-  $.ajax({
-       type: "GET",
-       url: "http://api.avoindata.net/users", //API for test use
-       dataType: 'json',
-       cache: false,
-       success: function(data)
-        {
-          // JSON sisältää kaksi objektia: users ja rights
-          $.each(data.users, function (i, user) {
-  		// tee mitä haluat jokaiselle
-      		$("#userlist").append("<li>" +user.handle+ "</li>");
-  	     });
-       })
-*/

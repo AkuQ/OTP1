@@ -1,6 +1,10 @@
-describe('expand', function () {
+describe('Check in expand.js, that:', function () {
 
-  it("changed should be 'false' before using opendDesk() or closeDesk()", function () {
-      expect(changed).toBe(false);
+  it("'closeDesk()' is defined", function() {
+    expect(window.closeDesk).toBeDefined();
+  });
+
+  it("'openDesk()' is defined", function() {
+    expect(window.openDesk).toBeDefined();
   });
 });
