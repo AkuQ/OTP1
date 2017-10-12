@@ -1,13 +1,13 @@
-var userName = $(".username").val();
 var userID;
 var chatID; //TÄHÄN LISTA JOHON TALLETETAAN CHAT IIDEET
 var lastMessage;
+var userName = "testUser";//$('#username').val();
 /*window.onload = function(){
   var start = setInterval(updateMessages, 2000);
 }*/
 
 function getTime(){
-  $.get("10.114.34.17/api/getTime", function(data){
+  $.get("/api/getTime", function(data){
     return data;
   })
 }
@@ -16,12 +16,12 @@ function createUser(){
   var authToken;
   var userID;
   var sendInfo = {
-    Name : userName
+    Name : this.userName
   };
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/users/create",
+    url: "/api/users/create",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
@@ -35,17 +35,20 @@ function createUser(){
 
 function listUsers(){
   var sendInfo = {
-      chat_id: $("#").val()
+      chat_id: this.chatID
     }
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/users/list",
+    url: "/api/users/list",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
     success: function (data) {
       console.log(data);
+      $.each(data.name, function (i, name) {
+      $("#group-users").append("<li>" + i + "</li>");
+      })
     }
   })
 }
@@ -53,31 +56,33 @@ function listUsers(){
 
 function createRoom(){
   var sendInfo = {
-    name: userName,
-    password: $("#").val()
+    name: $("#roomName").val(),
+    password: $("#roomPassword").val()
     }
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/rooms/create",
+    url: "/api/rooms/create",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
     success: function (data) {
       console.log(data);
+      this.chatID = data.result;
     }
   })
+  createUser()
 }
 
 function listRooms(){
   var sendInfo = {
     name: userName,
-    password: $("#").val()
+    password: $("#roomPassword").val()
   }
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/rooms/list",
+    url: "/api/rooms/list",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
@@ -96,7 +101,7 @@ function updateMessages(){
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/messages/list",
+    url: "/api/messages/list",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType: "json",
@@ -118,7 +123,7 @@ function sendMessage(){
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/messages/post",
+    url: "/api/messages/post",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
@@ -127,4 +132,5 @@ function sendMessage(){
     }
   })
   updateMessages();
+  $("#textArea").val() = "";
 }
