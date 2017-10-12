@@ -7,7 +7,7 @@ var userName = "testUser";//$('#username').val();
 }*/
 
 function getTime(){
-  $.get("10.114.34.17/api/getTime", function(data){
+  $.get("/api/getTime", function(data){
     return data;
   })
 }
@@ -21,7 +21,7 @@ function createUser(){
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/users/create",
+    url: "/api/users/create",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
@@ -40,7 +40,7 @@ function listUsers(){
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/users/list",
+    url: "/api/users/list",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
@@ -62,7 +62,7 @@ function createRoom(){
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/rooms/create",
+    url: "/api/rooms/create",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
@@ -71,18 +71,18 @@ function createRoom(){
       this.chatID = data.result;
     }
   })
-  createUser();
+  createUser()
 }
 
 function listRooms(){
   var sendInfo = {
     name: userName,
-    password: $("#").val()
+    password: $("#roomPassword").val()
   }
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/rooms/list",
+    url: "/api/rooms/list",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
@@ -101,7 +101,7 @@ function updateMessages(){
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/messages/list",
+    url: "/api/messages/list",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType: "json",
@@ -123,7 +123,7 @@ function sendMessage(){
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/messages/post",
+    url: "/api/messages/post",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
@@ -132,4 +132,5 @@ function sendMessage(){
     }
   })
   updateMessages();
+  $("#textArea").val() = "";
 }
