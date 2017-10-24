@@ -86,8 +86,8 @@ function listRooms(){
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
-    success: function (data) {
-      console.log(data);
+    success: function (response) {
+      console.log(response);
     }
   })
 }
@@ -101,14 +101,14 @@ function updateMessages(){
 
   $.ajax({
     type: "POST",
-    url: "/api/messages/list",
+    url: "http://10.114.34.17/api/messages/list",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType: "json",
     success: function (data) {
-      // console.log(data);
+      console.log(data);
       $.each(data.message, function (i, message) {
-      $("#messages").append("<li>" + i + "</li>");
+      $("#messageList").append("<li>"+getTime()+"|"+ +"|" i + "</li>");
       })
     }
   })
@@ -123,7 +123,7 @@ function sendMessage(){
 
   $.ajax({
     type: "POST",
-    url: "/api/messages/post",
+    url: "http://10.114.34.17/api/messages/post",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
