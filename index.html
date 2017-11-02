@@ -25,7 +25,7 @@
         <div id="main-menu" class="btn-group-vertical" role="group" aria-label="Basic example">
             <!-- aloitusvalinnat -->
           <button id="createRoom" type="button" class="btn flash createRoom"><span class="glyphicon glyphicon-plus"></span>  Create Room</button>
-          <button id="EnterRoom" type="button" class="btn flash"><span id="comment-glyphicon" class="glyphicon glyphicon-comment"></span> Enter Room </button>
+          <button id="EnterRoom" type="button" class="btn flash" onclick="listRooms()"><span id="comment-glyphicon" class="glyphicon glyphicon-comment"></span> Enter Room </button>
 
             <!--1 Huoneen luonti -->
             <form id="createRoomForm">
@@ -33,7 +33,7 @@
             <input id="roomName" class="form-group" type="text" name="roomName" placeholder="Room name" maxlength="20">
             <input id="roomPassword" class="form-group" type="password" name="roomPassword" placeholder="Password" maxlength="20">
             <input id="roomPasswordAgain" class="form-group" type="password" name="roomPassword" placeholder="Password again" maxlength="20">
-            <button id="CreateRoom-button" class="btn btn-default" onclick="createRoom()" type="submit" disabled>Create Room</button>
+            <button id="CreateRoom-button" onclick="getTime()" class="btn btn-default" onclick="createRoom()" type="submit" disabled>Create Room</button>
                 </form>
             <div id="roomName-errors">
             <p id="short-roomName">Your room name is too short. At least five characters is required.</p>
@@ -45,9 +45,9 @@
                 <p>Choose a Room to join</p>
                 <li class="listedRoom listedRoom-hover">TestiHuone</li>
                 <li class="listedRoom listedRoom-hover">ToinenTestiHuone</li>
-
                 <button id="chooseRoom-button" class="btn btn-default chooseRoom-hover" disabled>Enter Room</button>
             </ul>
+
             <!--
             <table id="createdRooms">
                 <tr>
@@ -97,31 +97,9 @@
 <!-- keskustelualue. Käyttäjät-napista vaihtuu listaan ryhmän käyttäjistä. -->
     <div id="chat-area" class="scrollable">
         <div id="messages">
-        <p>Tuomas: aa sfsafasff fafafasffsf sgsdgsdgsdgs sgsdgdsgsdgsdg nfhfhdf fafasfsafas dsfsdfsdfsdfsd sdfdsfsdfsdfsdfdsf sdfsdfsdfdssdfsdfdvxvxzvzkx zkcjxcjkz  jcixzcjizxcjzxjcixzcjizxcj ixzjcizxci</p>
-        <p>Janne:</p>
-        <p>Akseli:</p>
-        <p>Arto:</p>
-        <p>Tuomas:</p>
-        <p>Janne:</p>
-        <p>Akseli:</p>
-        <p>Arto:</p>
-        <p>Tuomas:</p>
-        <p>Janne:</p>
-        <p>Akseli:</p>
-        <p>Arto:</p>
-        <p>Tuomas:</p>
-        <p>Janne:</p>
-        <p>Akseli:</p>
-        <p>Arto:</p>
-        <p>Tuomas:</p>
-        <p>Janne:</p>
-        <p>Akseli:</p>
-        <p>Arto:</p>
-        <p>Tuomas:</p>
-        <p>Janne:</p>
-        <p>Akseli:</p>
-        <p>Arto:</p>
-        <p>Tuomas:</p>
+        <ul id="messageList">
+
+        </ul>
         </div>
         <div id="group-users">
             <p>Users: </p>
