@@ -7,7 +7,7 @@ var lastMessage;
 }*/
 
 function getTime(){
-  $.get("10.114.34.17/api/getTime", function(data){
+  $.post("10.114.34.17/api/get_time", function(data){
     return data;
   })
 }
