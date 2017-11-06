@@ -1,27 +1,34 @@
-var userName = $(".username").val();
 var userID;
 var chatID; //TÄHÄN LISTA JOHON TALLETETAAN CHAT IIDEET
 var lastMessage;
+var userName = "testUser";//$('#username').val();
+var rooms = document.getElementById("createdRooms");
+var users = [];
+
 /*window.onload = function(){
   var start = setInterval(updateMessages, 2000);
 }*/
 
+//Hae aika
 function getTime(){
-  $.post("10.114.34.17/api/get_time", function(data){
+
+  $.post("/api/get_time", function(data){
+    console.log(data);
     return data;
   })
 }
 
+//Lisää käyttäjän kantaan ja palauttaa ID:n
 function createUser(){
   var authToken;
   var userID;
   var sendInfo = {
-    Name : userName
+    Name : this.userName
   };
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/users/create",
+    url: "/api/users/create",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
@@ -33,19 +40,24 @@ function createUser(){
   })
 }
 
+//Listaa käyttäjät ja lisää ne #group-users elementtiin listamuodossa.
 function listUsers(){
   var sendInfo = {
-      chat_id: $("#").val()
+      chat_id: this.chatID
     }
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/users/list",
+    url: "/api/users/list",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
     success: function (data) {
-      console.log(data);
+      //console.log(data);
+      for(var i=0; i<data.result.length; i++){
+        users.push(data.result[i]);
+        $("#group-users").append("<li>" + data.result[i].name + "</li>");
+      }
     }
   })
 }
@@ -53,36 +65,43 @@ function listUsers(){
 
 function createRoom(){
   var sendInfo = {
-    name: userName,
-    password: $("#").val()
+    name: $("#roomName").val(),
+    password: $("#roomPassword").val()
     }
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/rooms/create",
+    url: "/api/rooms/create",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
     success: function (data) {
       console.log(data);
+      this.chatID = data.result;
     }
   })
+  createUser()
 }
 
 function listRooms(){
   var sendInfo = {
     name: userName,
-    password: $("#").val()
+    password: $("#roomPassword").val()
   }
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/rooms/list",
+    url: "/api/rooms/list",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
     success: function (data) {
-      console.log(data);
+    //console.log(data.result[1].name);
+      for(var i=0; i<data.result.length; i++){
+        rooms.innerHTML +=
+        "<li class='listedRoom listedRoom-hover'>"+
+        data.result[i].name+"</li>";
+      }
     }
   })
 }
@@ -96,35 +115,38 @@ function updateMessages(){
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/messages/list",
+    url: "http://10.114.34.17/api/messages/list",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType: "json",
     success: function (data) {
-      // console.log(data);
-      $.each(data.message, function (i, message) {
-      $("#messages").append("<li>" + i + "</li>");
-      })
+      //console.log(data);
+      for(var i=0; i<data.result.length; i++){
+        $("#messageList").append("<li>"+getTime()+
+        "|"+"nickname"+"|"+ data.result[i].message + "</li>");
+      }
     }
   })
 }
 
 function sendMessage(){
   var sendInfo = {
-  //  user_id: $("#").val(),
+    user_id: 1,
     chat_id: chatID,
     message: $("#textArea").val(),
   }
 
   $.ajax({
     type: "POST",
-    url: "10.114.34.17/api/messages/post",
+    url: "http://10.114.34.17/api/messages/post",
     data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
     success: function (data) {
       console.log(data);
+      //TALLENNA TAKAISIN TULEVA ID "MESSAGES SINCE" ARVOKSI
     }
   })
   updateMessages();
+  $("#textArea").val() = "";
 }
