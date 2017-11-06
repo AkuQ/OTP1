@@ -15,7 +15,7 @@
     <!-- Modal -->
   <div id="modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content scrollable">
       <div class="modal-header">
         <span id="back-arrow" class="glyphicon glyphicon-menu-left btn invisible arrow"></span>
         <span class="modal-title" id="modal-title">StormChat</span>
@@ -39,14 +39,13 @@
             <p id="short-roomName">Your room name is too short. At least five characters is required.</p>
 
             </div>
+          
             <!--2 Huoneeseen liittyminen -->
-
-            <ul id="createdRooms">
-                <p>Choose a Room to join</p>
-                <li class="listedRoom listedRoom-hover">TestiHuone</li>
-                <li class="listedRoom listedRoom-hover">ToinenTestiHuone</li>
-                <button id="chooseRoom-button" class="btn btn-default chooseRoom-hover" disabled>Enter Room</button>
-            </ul>
+            <div id="createdRooms">
+              <ul>
+              </ul>
+              <button id="chooseRoom-button" class="btn btn-default chooseRoom-hover" disabled>Enter Room</button>
+            </div>
 
             <!--
             <table id="createdRooms">
@@ -97,9 +96,11 @@
 <!-- keskustelualue. Käyttäjät-napista vaihtuu listaan ryhmän käyttäjistä. -->
     <div id="chat-area" class="scrollable">
         <div id="messages">
+
         <ul id="messageList">
 
         </ul>
+
         </div>
         <div id="group-users">
             <p>Users: </p>
@@ -122,10 +123,7 @@
       <span class="glyphicon glyphicon-menu-right" id="rightArrow" onclick="closeDesk()"></span>
       <textarea id="working-area">
 
-        cweccwecw
 
-
-        cwcecw
         </textarea>
     </div>
 
