@@ -11,6 +11,7 @@ var users = [];
 
 //Hae aika
 function getTime(){
+
   $.post("/api/get_time", function(data){
     console.log(data);
     return data;
