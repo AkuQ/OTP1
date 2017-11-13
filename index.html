@@ -28,9 +28,9 @@
           <button id="EnterRoom" type="button" class="btn flash" onclick="listRooms()"><span id="comment-glyphicon" class="glyphicon glyphicon-comment"></span> Enter Room </button>
 
             <!--1 Huoneen luonti -->
-            <form id="createRoomForm">
+            <form id="createRoomForm" role="form">
             <p>Give your Room a name and password</p>
-            <input id="roomName" class="form-group" type="text" name="roomName" placeholder="Room name" maxlength="20">
+              <input id="roomName" class="form-group" type="text" name="roomName" placeholder="Room name" maxlength="20">
             <input id="roomPassword" class="form-group" type="password" name="roomPassword" placeholder="Password" maxlength="20">
             <input id="roomPasswordAgain" class="form-group" type="password" name="roomPassword" placeholder="Password again" maxlength="20">
             <button id="CreateRoom-button" onclick="getTime()" class="btn btn-default" onclick="createRoom()" type="submit" disabled>Create Room</button>
@@ -39,32 +39,19 @@
             <p id="short-roomName">Your room name is too short. At least five characters is required.</p>
 
             </div>
-          
+
             <!--2 Huoneeseen liittyminen -->
-            <div id="createdRooms">
-              <ul>
+            <div id="createdRoomsContainer">
+              <ul id="createdRooms">
+                  <li class="listedRoom listedRoom-hover">huone</li>
+                  <li class="listedRoom listedRoom-hover">huone</li>
+                  <li class="listedRoom listedRoom-hover">huone</li>
+                  <li class="listedRoom listedRoom-hover">huone</li>
+                  <li class="listedRoom listedRoom-hover">huone</li>
+                  <li class="listedRoom listedRoom-hover">huone</li><span class="glyphicon glyphicon-log-in" id="login"><span class="tooltiptext"></span></span>
               </ul>
               <button id="chooseRoom-button" class="btn btn-default chooseRoom-hover" disabled>Enter Room</button>
             </div>
-
-            <!--
-            <table id="createdRooms">
-                <tr>
-                    <th><p>Choose a Room to join</p></th>
-                </tr>
-                <tbody id="table-body">
-                <tr>
-                    <td class="listedRoom">TestiHuone</td>
-                </tr>
-                <tr>
-                    <td class="listedRoom">ToinenTestiHuone</td>
-                </tr>
-                    </tbody>
-                <tr>
-                    <td><button id="chooseRoom-button">Enter</button></td>
-                </tr>
-
-            </table>  -->
 
             <!--2 Huoneen valinnan jälkeen valitaan nimi -->
             <form id="chooseNameForm" class="form-inline">
@@ -131,15 +118,12 @@
   </div>
 </div>
   <script src="js/expand.js"></script>
-
   <script src="js/modal.js"></script>
   <script src="js/chat.js"></script>
-    <script src="js/menu.js"></script>
-    <script src="js/chat-area.js"></script>
-
-    <script src="js/jquery.nicescroll.js"></script>
-
-    <script src="js/download.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/chat-area.js"></script>
+  <script src="js/jquery.nicescroll.js"></script>
+  <script src="js/download.js"></script>
 
 </body>
 </html>
