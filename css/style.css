@@ -135,9 +135,12 @@ color: #999999;
 
 }
 
+
 #main-menu {
     min-width: 200px;
 }
+
+
 
 #createRoom {
     background-color: rgb(120,142,197);
@@ -201,7 +204,7 @@ color: #999999;
 color: #999999 !important;
 }
 
-#roomName, #username, #roomPassword, #roomPasswordAgain {
+#roomName, #username, #roomPassword, #roomPasswordAgain, #roomSearch {
     padding: 4px;
     font-size: 16px;
     width: 300px;
@@ -353,8 +356,10 @@ p {
 
 }
 
-ul {
+#createdRooms {
     list-style-type: none;
+    margin: auto;
+    width: 300px;
 }
 
 .listedRoom {
@@ -406,18 +411,16 @@ tr {
     background-color: rgba(0,0,0, 0.5);
 }
 
-/*
-#createRoomForm input:focus {
-   background-color: rgba(175,197,255,0.9);
-
-}
-
-#chooseNameForm input:focus {
-   background-color: rgba(175,197,255,0.9);
-
-} */
-
 #login {
   position: absolute !important;
   margin-left: 20px !important;
+}
+
+#roomSearch {
+  background: rgb(213,220,237) url(images/search.png) right no-repeat;
+  background-size: 30px 30px;
+  background-origin: content-box;
+}
+#user-icon {
+  height: 30px;
 }
