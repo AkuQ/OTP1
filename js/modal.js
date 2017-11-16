@@ -1,3 +1,9 @@
+function clearInputBackground() {
+  $('#roomName, #roomPassword, #roomPasswordAgain, #username').css('background', '');
+  $('#roomName, #roomPassword, #roomPasswordAgain, #username').css('background-size', '');
+  $('#roomName, #roomPassword, #roomPasswordAgain, #username').css('background-origin', '');
+}
+
 //Modal ei häviä vaikka klikkaa sen ulkopuolelle
 $('#modal').modal({
     backdrop: 'static',
@@ -46,8 +52,11 @@ $('#EnterRoom').click(function() {
 });
 //huoneen luonti
 $('#CreateRoom-button').click(function() {
-
-  //  $('#modal').modal('toggle');
+  $("#roomName, #roomPassword, #roomPasswordAgain").val('');
+  $('#CreateRoom-button').prop('disabled', true);
+  $('#roomCreatedMessage').fadeIn(150);
+  $('#roomCreatedMessage').delay(10000).fadeOut(150);
+  clearInputBackground();
 });
 //huoneen valinta -hover
 /*
@@ -188,7 +197,7 @@ $("#roomName, #roomPassword, #roomPasswordAgain").val('');
 //näyttää modalin/aloitusikkunan
 $('#modal').modal('show');
 
-$('#createRoomForm, #chooseNameForm, #short-username, #short-roomName, #createdRoomsContainer').hide();
+$('#createRoomForm, #chooseNameForm, #short-username, #short-roomName, #createdRoomsContainer, #roomCreatedMessage').hide();
 
 //nappi pois käytöstä
 $('#chooseRoom-button, #CreateRoom-button').prop('disabled', true);
