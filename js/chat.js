@@ -1,7 +1,7 @@
 var userID = getCookie("userID");
 var chatID = getCookie("chatID");
 var lastMessage = 0;
-var userName = "testUser";//$('#username').val();
+//var userName = $('#username').val();
 var rooms = document.getElementById("createdRooms");
 var users = [];
 var roomCount = 0;
@@ -45,7 +45,7 @@ function getTime(){
 //Lisää käyttäjän kantaan ja palauttaa ID:n
 function createUser(){
   var sendInfo = {
-    name : userName
+    name : $('#username').val();
   }
 
   $.ajax({
@@ -104,7 +104,6 @@ function createRoom(){
       this.chatID = data.result;
     }
   })
-  createUser()
 }
 
 function joinRoom(){
