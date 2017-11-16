@@ -25,7 +25,7 @@ $('#back-arrow').click(function() {
     $('#back-arrow').addClass('invisible');
     $('#createRoom, #EnterRoom').delay(150).fadeIn(150);
     $('ul li').removeClass('roomSelected');
-    $('#chooseRoom-button, #CreateRoom-button').prop('disabled', true);
+    $('#chooseRoom-button, #CreateRoom-button, #choosename-button').prop('disabled', true);
     $('ul li').addClass('listedRoom-hover');
     $('#roomName, #roomPassword, #roomPasswordAgain, #username').css('background', '');
     $('#roomName, #roomPassword, #roomPasswordAgain, #username').css('background-size', '');
@@ -50,7 +50,18 @@ $('#CreateRoom-button').click(function() {
   //  $('#modal').modal('toggle');
 });
 //huoneen valinta -hover
-$('ul li').click(function() {
+/*
+$('ul li').on( "click", function() {
+    if ($('ul li').hasClass('roomSelected')) {
+        $('ul li').removeClass('roomSelected');
+        $('ul li').addClass('listedRoom-hover');
+    }
+    $(this).toggleClass('roomSelected');
+    $(this).removeClass('listedRoom-hover');
+    $('#chooseRoom-button').prop('disabled', false);
+}); */
+
+$('#createdRooms').on( "click", ".listedRoom", function() {
     if ($('ul li').hasClass('roomSelected')) {
         $('ul li').removeClass('roomSelected');
         $('ul li').addClass('listedRoom-hover');
@@ -59,6 +70,7 @@ $('ul li').click(function() {
     $(this).removeClass('listedRoom-hover');
     $('#chooseRoom-button').prop('disabled', false);
 });
+
 
 //estää default submiting
 $("#createRoomForm,#chooseNameForm").submit(function(e){
