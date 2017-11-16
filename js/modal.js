@@ -27,14 +27,22 @@ $('#back-arrow').click(function() {
     $('ul li').removeClass('roomSelected');
     $('#chooseRoom-button, #CreateRoom-button').prop('disabled', true);
     $('ul li').addClass('listedRoom-hover');
+    $('#roomName, #roomPassword, #roomPasswordAgain, #username').css('background', '');
+    $('#roomName, #roomPassword, #roomPasswordAgain, #username').css('background-size', '');
+    $('#roomName, #roomPassword, #roomPasswordAgain, #username').css('background-origin', '');
 
 
 });
 //enter room -valikkoon
 $('#EnterRoom').click(function() {
+    $('#username').val('');
+    $('#createRoom, #EnterRoom').fadeOut(150);
     $('#chooseNameForm').delay(150).fadeIn(150);
     $('#back-arrow').removeClass('invisible');
-    $('#createRoom, #EnterRoom').fadeOut(150);
+    $('#roomSearch').css('background', 'rgb(213,220,237) url(images/search.png) right no-repeat');
+    $('#roomSearch').css('background-size', '23px 23px');
+    $('#roomSearch').css('background-origin', 'content-box');
+
 });
 //huoneen luonti
 $('#CreateRoom-button').click(function() {
@@ -60,11 +68,11 @@ $("#createRoomForm,#chooseNameForm").submit(function(e){
 //virheilmoitus
 $('#roomName').keyup(function() {
     if ($('#roomName').val().length <= 4) {
-        $('#roomName').css('background', 'white url(images/error.png) right no-repeat');
+        $('#roomName').css('background', 'rgb(213,220,237) url(images/error.png) right no-repeat');
         $('#roomName').css('background-size', '18px 18px');
         $('#roomName').css('background-origin', 'content-box');
     } else {
-      $('#roomName').css('background', 'white url(images/success.png) right no-repeat');
+      $('#roomName').css('background', 'rgb(213,220,237) url(images/success.png) right no-repeat');
       $('#roomName').css('background-size', '23px 23px');
       $('#roomName').css('background-origin', 'content-box');
     }
@@ -80,11 +88,11 @@ $('#roomName').focusout(function() {
 //virheilmoitus
 $('#roomPassword').keyup(function() {
     if ($('#roomPassword').val().length <= 4) {
-        $('#roomPassword').css('background', 'white url(images/error.png) right no-repeat');
+        $('#roomPassword').css('background', 'rgb(213,220,237) url(images/error.png) right no-repeat');
         $('#roomPassword').css('background-size', '18px 18px');
         $('#roomPassword').css('background-origin', 'content-box');
     } else {
-      $('#roomPassword').css('background', 'white url(images/success.png) right no-repeat');
+      $('#roomPassword').css('background', 'rgb(213,220,237) url(images/success.png) right no-repeat');
       $('#roomPassword').css('background-size', '23px 23px');
       $('#roomPassword').css('background-origin', 'content-box');
     }
@@ -102,7 +110,7 @@ $('#roomPassword').focusout(function() {
 $('#roomPasswordAgain, #roomPassword').keyup(function() {
     if ($('#roomName').val().length >= 5 && $('#roomPassword').val().length >= 5 && $('#roomPassword').val() ==  $('#roomPasswordAgain').val()) {
     $('#CreateRoom-button').prop('disabled', false);
-    $('#roomPasswordAgain').css('background', 'white url(images/success.png) right no-repeat');
+    $('#roomPasswordAgain').css('background', 'rgb(213,220,237) url(images/success.png) right no-repeat');
     $('#roomPasswordAgain').css('background-size', '23px 23px');
     $('#roomPasswordAgain').css('background-origin', 'content-box');
 } else if ($('#roomPasswordAgain').val().length < 1) {
@@ -112,7 +120,7 @@ $('#roomPasswordAgain, #roomPassword').keyup(function() {
   $('#roomPasswordAgain').css('background-origin', '');
 }else {
  $('#CreateRoom-button').prop('disabled', true);
- $('#roomPasswordAgain').css('background', 'white url(images/error.png) right no-repeat');
+ $('#roomPasswordAgain').css('background', 'rgb(213,220,237) url(images/error.png) right no-repeat');
  $('#roomPasswordAgain').css('background-size', '18px 18px');
  $('#roomPasswordAgain').css('background-origin', 'content-box');
 }
@@ -121,7 +129,7 @@ $('#roomPasswordAgain, #roomPassword').keyup(function() {
 $('#username').keyup(function() {
   if ($('#username').val().length >= 3) {
     $('#choosename-button').prop('disabled', false);
-    $('#username').css('background', 'white url(images/success.png) right no-repeat');
+    $('#username').css('background', 'rgb(213,220,237) url(images/success.png) right no-repeat');
     $('#username').css('background-size', '23px 23px');
     $('#username').css('background-origin', 'content-box');
   } else if ($('#username').val().length < 1) {
@@ -131,7 +139,7 @@ $('#username').keyup(function() {
     $('#username').css('background-origin', '');
   }else {
    $('#choosename-button').prop('disabled', true);
-   $('#username').css('background', 'white url(images/error.png) right no-repeat');
+   $('#username').css('background', 'rgb(213,220,237) url(images/error.png) right no-repeat');
    $('#username').css('background-size', '18px 18px');
    $('#username').css('background-origin', 'content-box');
   }
@@ -141,6 +149,20 @@ $('#choosename-button').click(function() {
   $('#chooseNameForm').fadeOut(150);
   $('#createdRoomsContainer').delay(150).fadeIn(150);
 });
+
+//Huoneen hakeminen
+$('#roomSearch').keyup(function() {
+  var search = $('#roomSearch').val();
+  $('.listedRoom').each(function() {
+  var room = $(this).text();
+  if (room.includes(search) == false) {
+    $(this).hide();
+  } else {
+    $(this).show();
+  }
+})
+});
+
 
 //syötekenttien tyhjennys
 $("#roomName, #roomPassword, #roomPasswordAgain").val('');
