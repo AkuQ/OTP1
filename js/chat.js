@@ -35,7 +35,6 @@ function getCookie(field) {
 
 //Hae aika
 function getTime(){
-
   $.post("/api/get_time", function(data){
     console.log(data);
     return data;
@@ -44,8 +43,9 @@ function getTime(){
 
 //Lisää käyttäjän kantaan ja palauttaa ID:n
 function createUser(){
+  console.log("createUser() called");
   var sendInfo = {
-    name : $('#username').val();
+    name : $('#username').val()
   }
 
   $.ajax({
@@ -55,10 +55,7 @@ function createUser(){
     contentType: "application/json",
     dataType:"json",
     success: function (data) {
-      console.log(data.result.id);
-      var id = data.result.id;
-      setCookie("userID", this.id);
-
+      setCookie("userID", data.result.id);
     }
   })
 }
@@ -129,22 +126,18 @@ function joinRoom(){
 
 function listRooms(){
   console.log("Listrooms called");
-  var sendInfo = {
-    name: userName,
-    password: $("#roomPassword").val()
-  }
-
   $.ajax({
     type: "POST",
     url: "/api/rooms/list",
-    data: JSON.stringify(sendInfo),
     contentType: "application/json",
     dataType:"json",
     success: function (data) {
-        for(var i = roomCount; i < data.result.length; i++){
+      console.log(data.result.error);
+      console.log(data.result[1].name);
+        for(var i = roomCount; i < data.result.length-1; i++){
 
           // Luodaan HTML -elementti, jolle asetetaan luokka ja onClick
-          // eventlistener. Klikatessa kyseisen elementin "chatid" tallentuu
+          // eventlistener. Klikatessa kyseisen elementin "chatID" tallentuu
           // selaimen kekseihin
           rooms.innerHTML +=
           "<li onclick='setCookie(`chatID`,"+data.result[i].id+

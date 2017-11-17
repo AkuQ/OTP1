@@ -25,7 +25,7 @@
         <div id="main-menu" class="btn-group-vertical" role="group" aria-label="Basic example">
             <!-- aloitusvalinnat -->
           <button id="createRoom" type="button" class="btn flash createRoom"><span class="glyphicon glyphicon-plus"></span>  Create Room</button>
-          <button id="EnterRoom" type="button" class="btn flash" onclick="listRooms()"><span id="comment-glyphicon" class="glyphicon glyphicon-comment"></span> Enter Room </button>
+          <button id="EnterRoom" type="button" class="btn flash"><span id="comment-glyphicon" class="glyphicon glyphicon-comment"></span> Enter Room </button>
         </div>
             <!--1 Huoneen luonti -->
             <form id="createRoomForm" role="form">
@@ -44,17 +44,8 @@
             <div id="createdRoomsContainer">
               <input id="roomSearch" type="text" maxlength="20" placeholder="search room">
               <ul id="createdRooms" class="multi-column">
-                <li class="listedRoom listedRoom-hover">testi</li>
-                <li class="listedRoom listedRoom-hover">prty</li>
-                <li class="listedRoom listedRoom-hover">work</li>
-                <li class="listedRoom listedRoom-hover">gym</li>
-                <li class="listedRoom listedRoom-hover">important</li>
-                <li class="listedRoom listedRoom-hover">wise guys</li>
-                <li class="listedRoom listedRoom-hover">huone</li>
-                <li class="listedRoom listedRoom-hover">huone</li>
-                <li class="listedRoom listedRoom-hover">huone</li>
               </ul>
-              <button id="chooseRoom-button" class="btn btn-default chooseRoom-hover" disabled>Enter Room</button>
+              <button id="chooseRoom-button" class="btn btn-default chooseRoom-hover" onclick="joinRoom()" disabled>Enter Room</button>
             </div>
 
             <!--2 Huoneen valinnan jälkeen valitaan nimi -->
@@ -62,7 +53,8 @@
               <p>Choose a username</p>
               <img id="user-icon" src="images/user.png">
             <input id="username" class="form-group" type="text" maxlength="20">
-            <button id="choosename-button" class="btn btn-default choosename-hover" disabled>Choose</button>
+            <button id="choosename-button" class="btn btn-default choosename-hover"
+             onclick="createUser();listRooms()" disabled>Choose</button>
             </form>
             <p id="short-username">Your username is too short. At least five characters is required.</p>
 
@@ -74,7 +66,7 @@
 </div>
 
   <div id="container">
-    <div class="row" id="contentBox" onload="chat()">
+    <div class="row" id="contentBox">
 
 <!-- LeftContentin sisään kaikki vasemman puoliskon sisältö (Viestikenttä yms.).
     Nuolta klikkaamalla toinen puoli laajentuu ja toinen pienenee.  -->
