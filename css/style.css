@@ -286,9 +286,11 @@ color: #999999;
   margin-top: 5px;
 }
 
-#short-username, #roomName-errors {
+#roomName-errors p{
     margin-top: 10px;
     color: white;
+    font-size: 14px;
+    background-color: rgba(0,0,0,0.6) !important;
 }
 
 #roomCreatedMessage {

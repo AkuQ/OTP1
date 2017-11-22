@@ -92,10 +92,15 @@ $("#createRoomForm,#chooseNameForm").submit(function(e){
 
 //virheilmoitus
 $('#roomName').keyup(function() {
-    if ($('#roomName').val().length <= 4) {
-        $('#roomName').css('background', 'rgb(213,220,237) url(images/error.png) right no-repeat');
-        $('#roomName').css('background-size', '18px 18px');
-        $('#roomName').css('background-origin', 'content-box');
+    if ($('#roomName').val().length < 1) {
+      $('#roomName').css('background', '');
+      $('#roomName').css('background-size', '');
+      $('#roomName').css('background-origin', '');
+    } else if ($('#roomName').val().length >= 1 && $('#roomName').val().length < 6) {
+      $('#CreateRoom-button').prop('disabled', true);
+      $('#roomName').css('background', 'rgb(213,220,237) url(images/error.png) right no-repeat');
+      $('#roomName').css('background-size', '18px 18px');
+      $('#roomName').css('background-origin', 'content-box');
     } else {
       $('#roomName').css('background', 'rgb(213,220,237) url(images/success.png) right no-repeat');
       $('#roomName').css('background-size', '23px 23px');
@@ -112,11 +117,16 @@ $('#roomName').focusout(function() {
 });
 //virheilmoitus
 $('#roomPassword').keyup(function() {
-    if ($('#roomPassword').val().length <= 4) {
+    if ($('#roomPassword').val().length < 1) {
+      $('#CreateRoom-button').prop('disabled', true);
+      $('#roomPassword').css('background', '');
+      $('#roomPassword').css('background-size', '');
+      $('#roomPassword').css('background-origin', '');
+    } else if ($('#roomPassword').val().length >= 1 && $('#roomPassword').val().length < 6) {
         $('#roomPassword').css('background', 'rgb(213,220,237) url(images/error.png) right no-repeat');
         $('#roomPassword').css('background-size', '18px 18px');
         $('#roomPassword').css('background-origin', 'content-box');
-    } else {
+    }else {
       $('#roomPassword').css('background', 'rgb(213,220,237) url(images/success.png) right no-repeat');
       $('#roomPassword').css('background-size', '23px 23px');
       $('#roomPassword').css('background-origin', 'content-box');
@@ -143,7 +153,7 @@ $('#roomPasswordAgain, #roomPassword').keyup(function() {
   $('#roomPasswordAgain').css('background', '');
   $('#roomPasswordAgain').css('background-size', '');
   $('#roomPasswordAgain').css('background-origin', '');
-}else {
+} else {
  $('#CreateRoom-button').prop('disabled', true);
  $('#roomPasswordAgain').css('background', 'rgb(213,220,237) url(images/error.png) right no-repeat');
  $('#roomPasswordAgain').css('background-size', '18px 18px');
