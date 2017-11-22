@@ -116,7 +116,7 @@ color: #999999;
 
 .modal-content {
     background-color: rgba(0,0,0,0.6) !important;
-    height: 400px;
+    height: 450px;
     max-height: 100%;
     will-change: transform;
     overflow: auto;
