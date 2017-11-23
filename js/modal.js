@@ -4,6 +4,23 @@ function clearInputBackground() {
   $('#roomName, #roomPassword, #roomPasswordAgain, #username').css('background-origin', '');
 }
 
+function removeHtmlTags(fieldId) {
+  var value = fieldId.val();
+  var checked = value.replace(/(<([^>]+)>)/ig,"");
+  if (value != checked) {
+    var feedback = $('#htmlRemoved');
+    roomFeedback(feedback);
+  }
+  return checked;
+}
+
+function roomFeedback(feedback) {
+  var feedback = feedback;
+  $('#roomName-feedback').clearQueue();
+  feedback.fadeIn(150);
+  feedback.delay(5000).fadeOut(150);
+}
+
 //Modal ei häviä vaikka klikkaa sen ulkopuolelle
 $('#modal').modal({
     backdrop: 'static',
@@ -28,8 +45,8 @@ $("#createRoom").click(function() {
 });
 //back
 $('#back-arrow').click(function() {
-    $('#roomName-errors, #short-username, #roomCreatedMessage').clearQueue();
-    $('#createRoomForm, #chooseNameForm, #roomName-errors, #short-username, #createdRoomsContainer').fadeOut(150);
+    $('#roomName-feedback, #short-username, #roomCreatedMessage').clearQueue();
+    $('#createRoomForm, #chooseNameForm, #roomName-feedback, #short-username, #createdRoomsContainer').fadeOut(150);
     $('#back-arrow').addClass('invisible');
     $('#createRoom, #EnterRoom').delay(150).fadeIn(150);
     $('ul li').removeClass('roomSelected');
@@ -92,6 +109,9 @@ $("#createRoomForm,#chooseNameForm").submit(function(e){
 
 //virheilmoitus
 $('#roomName').keyup(function() {
+  var value = $('#roomName');
+  var checked = removeHtmlTags(value);
+  $('#roomName').val(checked);
     if ($('#roomName').val().length < 1) {
       $('#roomName').css('background', '');
       $('#roomName').css('background-size', '');
@@ -110,13 +130,16 @@ $('#roomName').keyup(function() {
 
 $('#roomName').focusout(function() {
   if ($('#roomName').val().length <= 4) {
-    $('#roomName-errors').clearQueue();
-    $('#roomName-errors').fadeIn(150).html('<p>Your room name is too short. At least five characters is required.</p>');
-    $('#roomName-errors').delay(5000).fadeOut(150);
+    $('#roomName-feedback').clearQueue();
+    $('#roomName-feedback').fadeIn(150).html('<p>Your room name is too short. At least five characters is required.</p>');
+    $('#roomName-feedback').delay(5000).fadeOut(150);
   }
 });
 //virheilmoitus
 $('#roomPassword').keyup(function() {
+  var value = $('#roomPassword');
+  var checked = removeHtmlTags(value);
+  $('#roomPassword').val(checked);
     if ($('#roomPassword').val().length < 1) {
       $('#CreateRoom-button').prop('disabled', true);
       $('#roomPassword').css('background', '');
@@ -135,14 +158,17 @@ $('#roomPassword').keyup(function() {
 
 $('#roomPassword').focusout(function() {
   if ($('#roomPassword').val().length <= 4) {
-      $('#roomName-errors').clearQueue();
-      $('#roomName-errors').fadeIn(150).html('<p>Your password is too short. At least five characters is required.</p>');
-      $('#roomName-errors').delay(5000).fadeOut(150);
+      $('#roomName-feedback').clearQueue();
+      $('#roomName-feedback').fadeIn(150).html('<p>Your password is too short. At least five characters is required.</p>');
+      $('#roomName-feedback').delay(5000).fadeOut(150);
 }
 
 });
 //virheilmoitus, nappi käyttöön
 $('#roomPasswordAgain, #roomPassword').keyup(function() {
+  var value = $('#roomPasswordAgain');
+  var checked = removeHtmlTags(value);
+  $('#roomPasswordAgain').val(checked);
     if ($('#roomName').val().length >= 5 && $('#roomPassword').val().length >= 5 && $('#roomPassword').val() ==  $('#roomPasswordAgain').val()) {
     $('#CreateRoom-button').prop('disabled', false);
     $('#roomPasswordAgain').css('background', 'rgb(213,220,237) url(images/success.png) right no-repeat');
@@ -209,7 +235,7 @@ $("#roomName, #roomPassword, #roomPasswordAgain").val('');
 //näyttää modalin/aloitusikkunan
 $('#modal').modal('show');
 
-$('#createRoomForm, #chooseNameForm, #short-username, #short-roomName, #createdRoomsContainer, #roomCreatedMessage').hide();
+$('#createRoomForm, #chooseNameForm, #short-username, #short-roomName, #createdRoomsContainer, #roomCreatedMessage, #htmlRemoved').hide();
 
 //nappi pois käytöstä
 $('#chooseRoom-button, #CreateRoom-button').prop('disabled', true);

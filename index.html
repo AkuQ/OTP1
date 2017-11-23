@@ -36,15 +36,28 @@
             <input id="roomPasswordAgain" class="form-group" type="password" name="roomPassword" placeholder="Password again" maxlength="20">
             <button id="CreateRoom-button" class="btn btn-default" onclick="createRoom()" type="submit" disabled>Create Room</button>
                 </form>
-            <div id="roomName-errors">
-            <!--<p id="short-roomName">Your room name is too short. At least five characters is required.</p>
-            <p id="roomCreatedMessage">You successfully created a room</p>-->
+            <div id="roomName-feedback">
+            -  <p id="short-roomName">Your room name is too short. At least five characters is required.</p>
+                <p id="roomCreatedMessage">You successfully created a room</p>
+                <p id="htmlRemoved">HTML tags not accepted. All tags were removed</p>
             </div>
 
             <!--2 Huoneeseen liittyminen -->
             <div id="createdRoomsContainer">
               <input id="roomSearch" type="text" maxlength="20" placeholder="search room">
               <ul id="createdRooms" class="multi-column">
+                  <li class="listedRoom listedRoom-hover">huone</li>
+                  <li class="listedRoom listedRoom-hover">testihuone</li>
+                  <li class="listedRoom listedRoom-hover">toinenhuone</li>
+                  <li class="listedRoom listedRoom-hover">kolmashuone</li>
+                  <li class="listedRoom listedRoom-hover">neljäshuone</li>
+                  <li class="listedRoom listedRoom-hover">viideshuone</li>
+                  <li class="listedRoom listedRoom-hover">kuudeshuone</li>
+                  <li class="listedRoom listedRoom-hover">seitsemäshuone</li>
+                  <li class="listedRoom listedRoom-hover">kahdeksashuone</li>
+                  <li class="listedRoom listedRoom-hover">yhdeksäs</li>
+                  <li class="listedRoom listedRoom-hover">kymmeneshuone</li>
+                  <li class="listedRoom listedRoom-hover">yhdestoistahuone</li>
               </ul>
               <button id="chooseRoom-button" class="btn btn-default chooseRoom-hover" onclick="joinRoom()" disabled>Enter Room</button>
             </div>

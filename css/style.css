@@ -286,7 +286,7 @@ color: #999999;
   margin-top: 5px;
 }
 
-#roomName-errors p{
+#roomName-feedback p{
     margin-top: 10px;
     color: white;
     font-size: 14px;
@@ -294,8 +294,8 @@ color: #999999;
 }
 
 #roomCreatedMessage {
-  color: lightgreen;
-  font-size: 16px;
+  color: lightgreen !important;
+  font-size: 18px !important;
 }
 /*
 .tooltip {
