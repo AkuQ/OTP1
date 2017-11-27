@@ -3,7 +3,6 @@ var chatID = getCookie("chatID");
 var lastMessage = 0;
 //var userName = $('#username').val();
 var rooms = document.getElementById("createdRooms");
-var users = [];
 var roomCount = 0;
 
 /*window.onload = function(){
@@ -63,7 +62,7 @@ function createUser(){
 //Listaa käyttäjät ja lisää ne #group-users elementtiin listamuodossa.
 function listUsers(){
   var sendInfo = {
-      chat_id: this.chatID
+      chat_id: getCookie('chatID')
     }
 
   $.ajax({
@@ -74,11 +73,13 @@ function listUsers(){
     dataType:"json",
     success: function (data) {
       //console.log(data);
+      var users = [];
       for(var i=0; i<data.result.length; i++){
-        users.push(data.result[i].name);
-        $("#group-users").append("<li>" + data.result[i].name + "</li>");
+        //users.push(data.result[i].name);
+        users.push([data.result[i].id, data.result[i].name])
+        $("#userlist").append("<li>" + data.result[i].name + "</li>");
       }
-      console.log(this.users);
+      console.log(users);
     }
   })
 }
@@ -106,9 +107,9 @@ function createRoom(){
 function joinRoom(){
   console.log("joinRoom() kutsuttu");
   var sendInfo = {
-    id:getCookie('chatID'),
+    chat_id:getCookie('chatID'),
     user_id: getCookie('userID'),
-    password: null
+    password: "default"
     }
 
   $.ajax({
@@ -119,7 +120,7 @@ function joinRoom(){
     dataType:"json",
     success: function (data) {
       console.log("1 = Kirjautuminen onnistui, 0 = epäonnistui");
-      console.log("Tulos:"+data.result.id);
+      console.log("Tulos:"+data.result);
     }
   })
 }
@@ -134,7 +135,7 @@ function listRooms(){
     success: function (data) {
       console.log(data.result.error);
       console.log(data.result[1].name);
-        for(var i = roomCount; i < data.result.length-1; i++){
+        for(var i = roomCount; i < data.result.length; i++){
 
           // Luodaan HTML -elementti, jolle asetetaan luokka ja onClick
           // eventlistener. Klikatessa kyseisen elementin "chatID" tallentuu
