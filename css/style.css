@@ -154,6 +154,10 @@ color: #999999;
     margin-right: 3px;
 }
 
+#login-glyphicon {
+    margin-left: 3px;
+}
+
 #EnterRoom {
     background-color: rgb(72,105,175);
     border: 1px solid rgb(68,100,168);
@@ -203,8 +207,8 @@ color: #999999;
 .arrow:hover {
 color: #999999 !important;
 }
-
-#roomName, #username, #roomPassword, #roomPasswordAgain, #roomSearch {
+/* input kentät */
+#roomName, #username, #roomPassword, #roomPasswordAgain, #roomSearch, #passwordRequired {
     padding: 4px;
     font-size: 16px;
     width: 300px;
@@ -233,17 +237,24 @@ color: #999999 !important;
    text-decoration: none;
     animation: flash 0.2s ease-out;
 }
+#backToListing {
+  background-color: rgb(90,105,175);
+  margin-top: 10px;
+}
 
-#chooseRoom-button {
-    margin-top: 20px;
+#chooseRoom-button, #backToListing {
     background-color: rgb(72,105,175);
     color:rgb(220,232,255);
     border: 1px solid rgb(68,100,168);
     display: block;
     margin: 20px auto;
-    width: 150px;
+    width: 155px;
     max-width: 80%;
     font-size: 16px;
+    height: 35px;
+}
+#backToListing {
+  background-color: rgb(90,105,175);
 }
 
 .chooseRoom-hover:hover {
@@ -286,7 +297,7 @@ color: #999999;
   margin-top: 5px;
 }
 
-#roomName-feedback p{
+#feedback p{
     margin-top: 10px;
     color: white;
     font-size: 14px;
@@ -295,13 +306,13 @@ color: #999999;
 
 #roomCreatedMessage {
   color: lightgreen !important;
+  font-size: 16px !important;
+}
+
+#roomCreatedMessage span{
+  color: white;
   font-size: 18px !important;
 }
-/*
-.tooltip {
-    position: relative;
-    display: inline-block;
-} */
 
 .menu .tooltiptext {
     visibility: hidden;
@@ -354,7 +365,6 @@ color: #999999;
 
 p {
     font-size: 12px;
-    color: white;
 
 }
 
@@ -387,12 +397,13 @@ p {
     border: 1px solid rgb(120,142,197);
 
 }
+
 table {
     width: 250px;
     min-width: 100px;
 }
 
-ul p, form p {
+ul p, form p, #roomSelected p {
     font-size: 18px;
     color:rgb(220,232,255);
     font-weight: normal;
@@ -404,7 +415,12 @@ ul p, form p {
 
 form p {
     margin-bottom: 10px;
+}
 
+#roomSelected p {
+  margin-bottom: 10px;
+  width: 300px;
+  max-width: 90%;
 }
 
 tr {

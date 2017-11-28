@@ -1,25 +1,4 @@
-function clearInputBackground() {
-  $('#roomName, #roomPassword, #roomPasswordAgain, #username').css('background', '');
-  $('#roomName, #roomPassword, #roomPasswordAgain, #username').css('background-size', '');
-  $('#roomName, #roomPassword, #roomPasswordAgain, #username').css('background-origin', '');
-}
-
-function removeHtmlTags(fieldId) {
-  var value = fieldId.val();
-  var checked = value.replace(/(<([^>]+)>)/ig,"");
-  if (value != checked) {
-    var feedback = $('#htmlRemoved');
-    roomFeedback(feedback);
-  }
-  return checked;
-}
-
-function roomFeedback(feedback) {
-  var feedback = feedback;
-  $('#roomName-feedback').clearQueue();
-  feedback.fadeIn(150);
-  feedback.delay(5000).fadeOut(150);
-}
+$('#modal').modal('show');
 
 //Modal ei häviä vaikka klikkaa sen ulkopuolelle
 $('#modal').modal({
@@ -27,26 +6,85 @@ $('#modal').modal({
     keyboard: false
 });
 
+$('#createRoomForm, #chooseNameForm, #createdRoomsContainer, #roomCreatedMessage, #feedback *, #roomSelected, #container').hide();
+
+clearFields();
+
+function clearInputBackground() {
+  $('#roomName, #roomPassword, #roomPasswordAgain, #username').css('background', '');
+  $('#roomName, #roomPassword, #roomPasswordAgain, #username').css('background-size', '');
+  $('#roomName, #roomPassword, #roomPasswordAgain, #username').css('background-origin', '');
+}
+
+function clearFields() {
+  $("#roomName, #roomPassword, #roomPasswordAgain, #username, #passwordRequired").val('');
+}
+/*
+function removeIllegalChars(fieldId) {
+  var value = fieldId.val();
+  var noTags = value.replace(/(<([^>]+)>)/ig,"");
+  var noTagsOrSpaces = noTags.replace(/\s/g,'');
+  if (value != noTagsOrSpaces) {
+    var feedback = $('#htmlRemoved');
+    roomFeedback(feedback);
+  }
+  return noTagsOrSpaces;
+} */
+
+function removeHtmlTags(fieldId) {
+  var value = fieldId.val();
+  var checked = value.replace(/(<([^>]+)>)/ig,"");
+  if (value != checked) {
+    clearFeedback();
+    var feedback = $('#htmlRemoved');
+    roomFeedback(feedback);
+  }
+  return checked;
+}
+
+function removeSpaces(fieldId) {
+  var value = fieldId;
+  var checked = value.replace(/\s/g,'');
+  if (value != checked) {
+    clearFeedback();
+    var feedback = $('#spacesRemoved');
+    roomFeedback(feedback);
+  }
+  return checked;
+}
+
+function roomFeedback(feedback) {
+  var feedback = feedback;
+  $('#feedback *').clearQueue();
+  feedback.fadeIn(150);
+  feedback.delay(5000).fadeOut(150);
+}
+
+function clearFeedback() {
+  $('#feedback *').clearQueue();
+  $('#feedback *').hide();
+}
+
 //modalin piilotus. Huoneeseen liittyminen
 $('#chooseRoom-button').click(function() {
     $('#modal').modal('toggle');
+    $('#back-arrow').toggleClass('invisible');
 });
 
 //Create room -valikkoon
 $("#createRoom").click(function() {
+    clearFeedback();
     $('#createRoomForm').delay(150).fadeIn(150);
     $('#back-arrow').removeClass('invisible');
     $('#createRoom, #EnterRoom').fadeOut(150);
-    $("#roomName, #roomPassword, #roomPasswordAgain").val('');
+    clearFields();
     $('#CreateRoom-button').prop('disabled', true);
-    $('#roomCreatedMessage').clearQueue();
-    $('#roomCreatedMessage').hide();
 
 });
 //back
 $('#back-arrow').click(function() {
-    $('#roomName-feedback, #short-username, #roomCreatedMessage').clearQueue();
-    $('#createRoomForm, #chooseNameForm, #roomName-feedback, #short-username, #createdRoomsContainer').fadeOut(150);
+    clearFeedback();
+    $('#createRoomForm, #chooseNameForm, #createdRoomsContainer, #roomSelected').fadeOut(150);
     $('#back-arrow').addClass('invisible');
     $('#createRoom, #EnterRoom').delay(150).fadeIn(150);
     $('ul li').removeClass('roomSelected');
@@ -58,25 +96,25 @@ $('#back-arrow').click(function() {
 });
 //enter room -valikkoon
 $('#EnterRoom').click(function() {
-    $('#username').val('');
+    clearFeedback();
+    clearFields();
     $('#createRoom, #EnterRoom').fadeOut(150);
     $('#chooseNameForm').delay(150).fadeIn(150);
     $('#back-arrow').removeClass('invisible');
     $('#roomSearch').css('background', 'rgb(213,220,237) url(images/search.png) right no-repeat');
     $('#roomSearch').css('background-size', '23px 23px');
     $('#roomSearch').css('background-origin', 'content-box');
-    $('#roomCreatedMessage').clearQueue();
-    $('#roomCreatedMessage').hide();
 
 });
 //huoneen luonti
 $('#CreateRoom-button').click(function() {
-  $("#roomName, #roomPassword, #roomPasswordAgain").val('');
+  clearFeedback();
   $('#CreateRoom-button').prop('disabled', true);
   $('#createRoomForm').fadeOut(150);
   $('#createRoom, #EnterRoom').delay(150).fadeIn(150);
   $('#roomCreatedMessage').delay(450).fadeIn(150);
   $('#roomCreatedMessage').delay(10000).fadeOut(150);
+  clearFields();
   clearInputBackground();
 });
 //huoneen valinta -hover
@@ -92,15 +130,26 @@ $('ul li').on( "click", function() {
 }); */
 //huoneen valinta
 $('#createdRooms').on( "click", ".listedRoom", function() {
-    if ($('ul li').hasClass('roomSelected')) {
-        $('ul li').removeClass('roomSelected');
-        $('ul li').addClass('listedRoom-hover');
-    }
     $(this).toggleClass('roomSelected');
     $(this).removeClass('listedRoom-hover');
     $('#chooseRoom-button').prop('disabled', false);
+    $('#createdRoomsContainer').fadeOut(150);
+    $('#roomSelected').delay(150).fadeIn(150);
+    var str = $(this).text();
+    $("#roomSelected p").html(str);
+    $('#back-arrow').toggleClass('invisible');
+    //$('#passwordRequired').text()
 });
 
+$('#backToListing').click(function() {
+  $('#roomSelected').fadeOut(150);
+  $('#createdRoomsContainer').delay(150).fadeIn(150);
+  if ($('ul li').hasClass('roomSelected')) {
+      $('ul li').removeClass('roomSelected');
+      $('ul li').addClass('listedRoom-hover');
+  }
+  $('#back-arrow').toggleClass('invisible');
+});
 
 //estää default submiting
 $("#createRoomForm,#chooseNameForm").submit(function(e){
@@ -110,13 +159,14 @@ $("#createRoomForm,#chooseNameForm").submit(function(e){
 //virheilmoitus
 $('#roomName').keyup(function() {
   var value = $('#roomName');
-  var checked = removeHtmlTags(value);
+  var checkedHtml = removeHtmlTags(value);
+  var checked = removeSpaces(checkedHtml);
   $('#roomName').val(checked);
     if ($('#roomName').val().length < 1) {
       $('#roomName').css('background', '');
       $('#roomName').css('background-size', '');
       $('#roomName').css('background-origin', '');
-    } else if ($('#roomName').val().length >= 1 && $('#roomName').val().length < 6) {
+    } else if ($('#roomName').val().length >= 1 && $('#roomName').val().length < 4) {
       $('#CreateRoom-button').prop('disabled', true);
       $('#roomName').css('background', 'rgb(213,220,237) url(images/error.png) right no-repeat');
       $('#roomName').css('background-size', '18px 18px');
@@ -129,16 +179,17 @@ $('#roomName').keyup(function() {
 });
 
 $('#roomName').focusout(function() {
-  if ($('#roomName').val().length <= 4) {
-    $('#roomName-feedback').clearQueue();
-    $('#roomName-feedback').fadeIn(150).html('<p>Your room name is too short. At least five characters is required.</p>');
-    $('#roomName-feedback').delay(5000).fadeOut(150);
+  if ($('#roomName').val().length < 4) {
+    clearFeedback();
+    $('#short-roomName').fadeIn(150);
+    $('#short-roomName').delay(5000).fadeOut(150);
   }
 });
 //virheilmoitus
 $('#roomPassword').keyup(function() {
   var value = $('#roomPassword');
-  var checked = removeHtmlTags(value);
+  var checkedHtml = removeHtmlTags(value);
+  var checked = removeSpaces(checkedHtml);
   $('#roomPassword').val(checked);
     if ($('#roomPassword').val().length < 1) {
       $('#CreateRoom-button').prop('disabled', true);
@@ -158,16 +209,17 @@ $('#roomPassword').keyup(function() {
 
 $('#roomPassword').focusout(function() {
   if ($('#roomPassword').val().length <= 4) {
-      $('#roomName-feedback').clearQueue();
-      $('#roomName-feedback').fadeIn(150).html('<p>Your password is too short. At least five characters is required.</p>');
-      $('#roomName-feedback').delay(5000).fadeOut(150);
+      clearFeedback();
+      $('#short-password').fadeIn(150);
+      $('#short-password').delay(5000).fadeOut(150);
 }
 
 });
 //virheilmoitus, nappi käyttöön
 $('#roomPasswordAgain, #roomPassword').keyup(function() {
   var value = $('#roomPasswordAgain');
-  var checked = removeHtmlTags(value);
+  var checkedHtml = removeHtmlTags(value);
+  var checked = removeSpaces(checkedHtml);
   $('#roomPasswordAgain').val(checked);
     if ($('#roomName').val().length >= 5 && $('#roomPassword').val().length >= 5 && $('#roomPassword').val() ==  $('#roomPasswordAgain').val()) {
     $('#CreateRoom-button').prop('disabled', false);
@@ -188,6 +240,10 @@ $('#roomPasswordAgain, #roomPassword').keyup(function() {
 });
 
 $('#username').keyup(function() {
+  var value = $('#username');
+  var checkedHtml = removeHtmlTags(value);
+  var checked = removeSpaces(checkedHtml);
+  $('#username').val(checked);
   if ($('#username').val().length >= 3) {
     $('#choosename-button').prop('disabled', false);
     $('#username').css('background', 'rgb(213,220,237) url(images/success.png) right no-repeat');
@@ -223,19 +279,8 @@ $('#roomSearch').keyup(function() {
 });
 
 
-//syötekenttien tyhjennys
-$("#roomName, #roomPassword, #roomPasswordAgain").val('');
-
 //Jos huonelista tyhjä
 /*if ($.trim($('div ul').html()) == "")) {
   $(this).append("<li>No Rooms to enter</li>");
 
 } */
-
-//näyttää modalin/aloitusikkunan
-$('#modal').modal('show');
-
-$('#createRoomForm, #chooseNameForm, #short-username, #short-roomName, #createdRoomsContainer, #roomCreatedMessage, #htmlRemoved').hide();
-
-//nappi pois käytöstä
-$('#chooseRoom-button, #CreateRoom-button').prop('disabled', true);
