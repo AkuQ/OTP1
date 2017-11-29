@@ -5,9 +5,9 @@ var lastMessage = 0;
 var rooms = document.getElementById("createdRooms");
 var roomCount = 0;
 
-/*window.onload = function(){
-  var start = setInterval(updateMessages, 2000);
-}*/
+window.onload = function(){
+
+}
 
 // Aseta keksi, field = keksin nimi ja value = keksin arvo
 function setCookie(field,value) {
@@ -121,6 +121,33 @@ function joinRoom(){
     success: function (data) {
       console.log("1 = Kirjautuminen onnistui, 0 = epäonnistui");
       console.log("Tulos:"+data.result);
+      if(data.result === 1){
+        //Onko käyttäjä huoneessa 1 = on, 0 = ei
+        setCookie("loggedIn","1",)
+      }
+    }
+  })
+}
+function leaveRoom(){
+  console.log("leaveRoom() kutsuttu");
+  var sendInfo = {
+    chat_id:getCookie('chatID'),
+    user_id: getCookie('userID')
+    }
+
+  $.ajax({
+    type: "POST",
+    url: "/api/rooms/leave",
+    data: JSON.stringify(sendInfo),
+    contentType: "application/json",
+    dataType:"json",
+    success: function (data) {
+      console.log("1 = Uloskirjautuminen onnistui, 0 = epäonnistui");
+      console.log("Tulos:"+data.result);
+      if(data.result === 1){
+        //Onko käyttäjä huoneessa 1 = on, 0 = ei
+        setCookie("loggedIn","0",)
+      }
     }
   })
 }
