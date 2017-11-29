@@ -15,66 +15,50 @@
     <!-- Modal -->
   <div id="modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content scrollable">
       <div class="modal-header">
         <span id="back-arrow" class="glyphicon glyphicon-menu-left btn invisible arrow"></span>
         <span class="modal-title" id="modal-title">StormChat</span>
-        <span class="glyphicon glyphicon-menu-right btn invisible arrow"></span>
+        <span class="btn"><img id="uk-flag" class="flag" src="images/uk-flag.png"></span>
+        <span class="btn"><img id="portugal-flag" class="flag" src="images/portugal-flag.png"></span>
       </div>
       <div id="modalBody" class="modal-body">
         <div id="main-menu" class="btn-group-vertical" role="group" aria-label="Basic example">
             <!-- aloitusvalinnat -->
           <button id="createRoom" type="button" class="btn flash createRoom"><span class="glyphicon glyphicon-plus"></span>  Create Room</button>
-          <button id="EnterRoom" type="button" class="btn flash"><span id="comment-glyphicon" class="glyphicon glyphicon-comment"></span> Enter Room </button>
-
+          <button id="EnterRoom" type="button" class="btn flash" onclick="listRooms()"><span id="comment-glyphicon" class="glyphicon glyphicon-comment"></span> Enter Room </button>
+        </div>
             <!--1 Huoneen luonti -->
-            <form id="createRoomForm">
+            <form id="createRoomForm" role="form">
             <p>Give your Room a name and password</p>
-            <input id="roomName" class="form-group" type="text" name="roomName" placeholder="Room name" maxlength="20">
+              <input id="roomName" class="form-group" type="text" name="roomName" placeholder="Room name" maxlength="20">
             <input id="roomPassword" class="form-group" type="password" name="roomPassword" placeholder="Password" maxlength="20">
             <input id="roomPasswordAgain" class="form-group" type="password" name="roomPassword" placeholder="Password again" maxlength="20">
             <button id="CreateRoom-button" class="btn btn-default" onclick="createRoom()" type="submit" disabled>Create Room</button>
                 </form>
             <div id="roomName-errors">
             <p id="short-roomName">Your room name is too short. At least five characters is required.</p>
-
+            <p id="roomCreatedMessage">You successfully created a room</p>
             </div>
+
             <!--2 Huoneeseen liittyminen -->
-
-            <ul id="createdRooms">
-                <p>Choose a Room to join</p>
-                <li class="listedRoom listedRoom-hover">TestiHuone</li>
-                <li class="listedRoom listedRoom-hover">ToinenTestiHuone</li>
-
-                <button id="chooseRoom-button" class="btn btn-default chooseRoom-hover" disabled>Enter Room</button>
-            </ul>
-            <!--
-            <table id="createdRooms">
-                <tr>
-                    <th><p>Choose a Room to join</p></th>
-                </tr>
-                <tbody id="table-body">
-                <tr>
-                    <td class="listedRoom">TestiHuone</td>
-                </tr>
-                <tr>
-                    <td class="listedRoom">ToinenTestiHuone</td>
-                </tr>
-                    </tbody>
-                <tr>
-                    <td><button id="chooseRoom-button">Enter</button></td>
-                </tr>
-
-            </table>  -->
+            <div id="createdRoomsContainer">
+              <input id="roomSearch" type="text" maxlength="20" placeholder="search room">
+              <ul id="createdRooms" class="multi-column">
+              </ul>
+              <button id="chooseRoom-button" class="btn btn-default chooseRoom-hover" onclick="joinRoom()" disabled>Enter Room</button>
+            </div>
 
             <!--2 Huoneen valinnan jälkeen valitaan nimi -->
             <form id="chooseNameForm" class="form-inline">
-            <input id="username" class="form-group" type="text" placeholder="Choose a username" maxlength="20">
-            <button id="choosename-button" class="btn btn-default">Choose</button>
+              <p>Choose a username</p>
+              <img id="user-icon" src="images/user.png">
+            <input id="username" class="form-group" type="text" maxlength="20">
+            <button id="choosename-button" class="btn btn-default choosename-hover"
+             onclick="createUser();" disabled>Choose</button>
             </form>
             <p id="short-username">Your username is too short. At least five characters is required.</p>
 
-        </div>
       </div>
       <div class="modal-footer">
       </div>
@@ -83,51 +67,32 @@
 </div>
 
   <div id="container">
-    <div class="row" id="contentBox" onload="chat()">
+    <div class="row" id="contentBox">
 
 <!-- LeftContentin sisään kaikki vasemman puoliskon sisältö (Viestikenttä yms.).
     Nuolta klikkaamalla toinen puoli laajentuu ja toinen pienenee.  -->
     <div class="col-xs-12 col-sm-8" id="leftContent">
-    <span class="glyphicon glyphicon glyphicon-user menu" id="users"><span id="users-amount">4</span><span class="tooltiptext">Users</span></span>
+    <span class="glyphicon glyphicon glyphicon-user menu" id="users" onclick="listUsers()"><span id="users-amount">1</span><span class="tooltiptext">Users</span></span>
       <span class="glyphicon glyphicon-menu-hamburger menu" id="menuBtn"></span>
-        <span class="glyphicon glyphicon-log-out menu" id="logout"><span class="tooltiptext">Logout</span></span>
+        <span class="glyphicon glyphicon-log-out menu" id="logout" onclick="leaveRoom()"><span class="tooltiptext">Logout</span></span>
         <span class="glyphicon glyphicon glyphicon-download menu" id="download"><span class="tooltiptext">Download</span></span>
       <span class="glyphicon glyphicon-menu-left" id="leftArrow" onclick="openDesk()"></span>
 
 <!-- keskustelualue. Käyttäjät-napista vaihtuu listaan ryhmän käyttäjistä. -->
     <div id="chat-area" class="scrollable">
         <div id="messages">
-        <p>Tuomas: aa sfsafasff fafafasffsf sgsdgsdgsdgs sgsdgdsgsdgsdg nfhfhdf fafasfsafas dsfsdfsdfsdfsd sdfdsfsdfsdfsdfdsf sdfsdfsdfdssdfsdfdvxvxzvzkx zkcjxcjkz  jcixzcjizxcjzxjcixzcjizxcj ixzjcizxci</p>
-        <p>Janne:</p>
-        <p>Akseli:</p>
-        <p>Arto:</p>
-        <p>Tuomas:</p>
-        <p>Janne:</p>
-        <p>Akseli:</p>
-        <p>Arto:</p>
-        <p>Tuomas:</p>
-        <p>Janne:</p>
-        <p>Akseli:</p>
-        <p>Arto:</p>
-        <p>Tuomas:</p>
-        <p>Janne:</p>
-        <p>Akseli:</p>
-        <p>Arto:</p>
-        <p>Tuomas:</p>
-        <p>Janne:</p>
-        <p>Akseli:</p>
-        <p>Arto:</p>
-        <p>Tuomas:</p>
-        <p>Janne:</p>
-        <p>Akseli:</p>
-        <p>Arto:</p>
-        <p>Tuomas:</p>
+
+        <ul id="messageList">
+
+        </ul>
+
         </div>
         <div id="group-users">
             <p>Users: </p>
+            <ol id="userlist">
+            </ol>
         </div>
     </div>
-    <ol id="userlist"></ol>
 
 <!-- Tämän divin sisään tekstin kirjoituskenttä & lähetä nappi. -->
       <div class="input-group" id="sendMessage">
@@ -144,10 +109,7 @@
       <span class="glyphicon glyphicon-menu-right" id="rightArrow" onclick="closeDesk()"></span>
       <textarea id="working-area">
 
-        cweccwecw
 
-
-        cwcecw
         </textarea>
     </div>
 
@@ -155,15 +117,12 @@
   </div>
 </div>
   <script src="js/expand.js"></script>
-
   <script src="js/modal.js"></script>
   <script src="js/chat.js"></script>
-    <script src="js/menu.js"></script>
-    <script src="js/chat-area.js"></script>
-
-    <script src="js/jquery.nicescroll.js"></script>
-
-    <script src="js/download.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/chat-area.js"></script>
+  <script src="js/jquery.nicescroll.js"></script>
+  <script src="js/download.js"></script>
 
 </body>
 </html>
