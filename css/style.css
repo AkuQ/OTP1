@@ -107,7 +107,7 @@ color: #999999;
 #modal {
     text-align: center;
     position: fixed;
-    background: url(../images/tausta.jpg) no-repeat center center fixed;
+   background: url(../images/tausta.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -116,7 +116,7 @@ color: #999999;
 
 .modal-content {
     background-color: rgba(0,0,0,0.6) !important;
-    height: 400px;
+    height: 450px;
     max-height: 100%;
     will-change: transform;
     overflow: auto;
@@ -152,6 +152,10 @@ color: #999999;
 
 #comment-glyphicon {
     margin-right: 3px;
+}
+
+#login-glyphicon {
+    margin-left: 3px;
 }
 
 #EnterRoom {
@@ -203,8 +207,8 @@ color: #999999;
 .arrow:hover {
 color: #999999 !important;
 }
-
-#roomName, #username, #roomPassword, #roomPasswordAgain, #roomSearch {
+/* input kentät */
+#roomName, #username, #roomPassword, #roomPasswordAgain, #roomSearch, #passwordRequired {
     padding: 4px;
     font-size: 16px;
     width: 300px;
@@ -233,17 +237,24 @@ color: #999999 !important;
    text-decoration: none;
     animation: flash 0.2s ease-out;
 }
+#backToListing {
+  background-color: rgb(90,105,175);
+  margin-top: 10px;
+}
 
-#chooseRoom-button {
-    margin-top: 20px;
+#chooseRoom-button, #backToListing {
     background-color: rgb(72,105,175);
     color:rgb(220,232,255);
     border: 1px solid rgb(68,100,168);
     display: block;
     margin: 20px auto;
-    width: 150px;
+    width: 155px;
     max-width: 80%;
     font-size: 16px;
+    height: 35px;
+}
+#backToListing {
+  background-color: rgb(90,105,175);
 }
 
 .chooseRoom-hover:hover {
@@ -286,20 +297,24 @@ color: #999999;
   margin-top: 5px;
 }
 
-#short-username, #roomName-errors {
+#feedback p{
     margin-top: 10px;
     color: white;
+    font-size: 14px;
+    background-color: rgba(0,0,0,0.6) !important;
 }
 
 #roomCreatedMessage {
-  color: lightgreen;
-  font-size: 16px;
+  color: lightgreen !important;
+  font-size: 18px !important;
 }
-/*
-.tooltip {
-    position: relative;
-    display: inline-block;
-} */
+
+#roomCreatedMessage strong{
+  color: white;
+  font-size: 20px !important;
+  white-space:nowrap;
+  font-weight: normal;
+}
 
 .menu .tooltiptext {
     visibility: hidden;
@@ -352,7 +367,6 @@ color: #999999;
 
 p {
     font-size: 12px;
-    color: white;
 
 }
 
@@ -385,12 +399,13 @@ p {
     border: 1px solid rgb(120,142,197);
 
 }
+
 table {
     width: 250px;
     min-width: 100px;
 }
 
-ul p, form p {
+ul p, form p, #roomSelected p {
     font-size: 18px;
     color:rgb(220,232,255);
     font-weight: normal;
@@ -402,7 +417,12 @@ ul p, form p {
 
 form p {
     margin-bottom: 10px;
+}
 
+#roomSelected p {
+  margin-bottom: 10px;
+  width: 300px;
+  max-width: 90%;
 }
 
 tr {
