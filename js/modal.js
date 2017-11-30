@@ -60,6 +60,8 @@ function clearFeedback() {
 $('#chooseRoom-button').click(function() {
     $('#modal').modal('toggle');
     $('#back-arrow').toggleClass('invisible');
+    $('#roomSelected').hide();
+    $('#createRoom, #EnterRoom').fadeIn(150);
 
 });
 
@@ -272,6 +274,14 @@ $('#roomSearch').keyup(function() {
     $(this).show();
   }
 })
+});
+
+$('#logout').click(function() {
+    $('#modal').modal('show');
+    $('#menuBtn').removeClass('pressed');
+    $('#users').removeClass('users-pressed');
+    $('#logout, #download, #group-users').hide();
+    $('#messages').show();
 });
 
 
