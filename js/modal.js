@@ -1,3 +1,4 @@
+
 $('#modal').modal('show');
 
 //Modal ei häviä vaikka klikkaa sen ulkopuolelle
@@ -8,7 +9,8 @@ $('#modal').modal({
 
 $('#createRoomForm, #chooseNameForm, #createdRoomsContainer, #roomCreatedMessage, #feedback *, #roomSelected').hide();
 
-
+//nappi pois käytöstä
+$('#chooseRoom-button, #CreateRoom-button').prop('disabled', true);
 
 clearFields();
 
@@ -281,3 +283,4 @@ $('#roomSearch').keyup(function() {
   $(this).append("<li>No Rooms to enter</li>");
 
 } */
+

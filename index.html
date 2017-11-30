@@ -37,7 +37,6 @@
             <button id="CreateRoom-button" class="btn btn-default" onclick="createRoom()" type="submit" disabled>Create Room</button>
                 </form>
 
-
             <!--2 Huoneeseen liittyminen -->
             <div id="createdRoomsContainer">
               <input id="roomSearch" type="text" maxlength="20" placeholder="search room">
@@ -95,7 +94,7 @@
     <div class="col-xs-12 col-sm-8" id="leftContent">
     <span class="glyphicon glyphicon glyphicon-user menu" id="users" onclick="listUsers()"><span id="users-amount">1</span><span class="tooltiptext">Users</span></span>
       <span class="glyphicon glyphicon-menu-hamburger menu" id="menuBtn"></span>
-        <span class="glyphicon glyphicon-log-out menu" id="logout"><span class="tooltiptext">Logout</span></span>
+        <span class="glyphicon glyphicon-log-out menu" id="logout" onclick="leaveRoom()"><span class="tooltiptext">Logout</span></span>
         <span class="glyphicon glyphicon glyphicon-download menu" id="download"><span class="tooltiptext">Download</span></span>
       <span class="glyphicon glyphicon-menu-left" id="leftArrow" onclick="openDesk()"></span>
 
