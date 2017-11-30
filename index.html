@@ -27,8 +27,8 @@
       <div id="modalBody" class="modal-body">
         <div id="main-menu" class="btn-group-vertical" role="group" aria-label="Basic example">
             <!-- aloitusvalinnat -->
-          <button id="createRoom" type="button" class="btn flash createRoom"><span class="glyphicon glyphicon-plus"></span>  Create Room</button>
-          <button id="EnterRoom" type="button" class="btn flash" onclick="listRooms()"><span id="comment-glyphicon" class="glyphicon glyphicon-comment"></span> Enter Room </button>
+          <button id="createRoom" type="button" class="btn flash createRoom"><span class="glyphicon glyphicon-plus"></span><span id="createRoomText"> Create Room</span></button>
+          <button id="EnterRoom" type="button" class="btn flash" onclick="listRooms()"><span id="comment-glyphicon" class="glyphicon glyphicon-comment"></span><span id="enterRoomText"> Enter Room</span></button>
         </div>
             <!--1 Huoneen luonti -->
             <form id="createRoomForm" role="form">
@@ -38,19 +38,33 @@
             <input id="roomPasswordAgain" class="form-group" type="password" name="roomPassword" placeholder="Password again" maxlength="20">
             <button id="CreateRoom-button" class="btn btn-default" onclick="createRoom()" type="submit" disabled>Create Room</button>
                 </form>
-            <div id="roomName-errors">
-            <p id="short-roomName">Your room name is too short. At least five characters is required.</p>
-            <p id="roomCreatedMessage">You successfully created a room</p>
-            </div>
 
             <!--2 Huoneeseen liittyminen -->
             <div id="createdRoomsContainer">
               <input id="roomSearch" type="text" maxlength="20" placeholder="search room">
               <ul id="createdRooms" class="multi-column">
+                  <li class="listedRoom listedRoom-hover">huone</li>
+                  <li class="listedRoom listedRoom-hover">testihuone</li>
+                  <li class="listedRoom listedRoom-hover">toinenhuone</li>
+                  <li class="listedRoom listedRoom-hover">kolmashuone</li>
+                  <li class="listedRoom listedRoom-hover">neljäshuone</li>
+                  <li class="listedRoom listedRoom-hover">viideshuone</li>
+                  <li class="listedRoom listedRoom-hover">kuudeshuone</li>
+                  <li class="listedRoom listedRoom-hover">seitsemäshuone</li>
+                  <li class="listedRoom listedRoom-hover">kahdeksashuone</li>
+                  <li class="listedRoom listedRoom-hover">yhdeksäs</li>
+                  <li class="listedRoom listedRoom-hover">kymmeneshuone</li>
+                  <li class="listedRoom listedRoom-hover">Huone106</li>
               </ul>
-              <button id="chooseRoom-button" class="btn btn-default chooseRoom-hover" onclick="joinRoom()" disabled>Enter Room</button>
+              <!--<button id="chooseRoom-button" class="btn btn-default chooseRoom-hover" onclick="joinRoom()" disabled>Enter Room</button>-->
             </div>
 
+            <div id="roomSelected">
+              <p class="roomSelected"></p>
+              <input id="passwordRequired" type="password" name="passwordRequired" placeholder="Type password to enter this Room">
+              <button id="chooseRoom-button" class="btn btn-default chooseRoom-hover" onclick="joinRoom()" disabled>Enter Room<span id="login-glyphicon" class="glyphicon glyphicon glyphicon-log-in"></span></button>
+              <button id="backToListing" class="btn btn-default chooseRoom-hover">Cancel</button>
+            </div>
             <!--2 Huoneen valinnan jälkeen valitaan nimi -->
             <form id="chooseNameForm" class="form-inline">
               <p>Choose a username</p>
@@ -59,10 +73,16 @@
             <button id="choosename-button" class="btn btn-default choosename-hover"
              onclick="createUser();" disabled>Choose</button>
             </form>
-            <p id="short-username">Your username is too short. At least five characters is required.</p>
 
-      </div>
-      <div class="modal-footer">
+            <div id="feedback">
+            -  <p id="short-roomName">Your room name is too short. At least four characters is required.</p>
+                <p id="roomCreatedMessage">You successfully created room<strong></strong></p>
+                <p id="short-username">Your username is too short. At least five characters is required.</p>
+                <p id="htmlRemoved">Character sequence not allowed.</p>
+                <p id="spacesRemoved">Spaces not allowed.</p>
+                <p id="short-password">Your password is too short. At least five characters is required.</p>
+            </div>
+
       </div>
     </div>
   </div>
@@ -83,7 +103,7 @@
 <!-- keskustelualue. Käyttäjät-napista vaihtuu listaan ryhmän käyttäjistä. -->
     <div id="chat-area" class="scrollable">
         <div id="messages">
-
+          <p>Arto: Hello! :D</p>
         <ul id="messageList">
 
         </ul>
@@ -125,6 +145,7 @@
   <script src="js/chat-area.js"></script>
   <script src="js/jquery.nicescroll.js"></script>
   <script src="js/download.js"></script>
+  <script src="js/languageChanger.js"></script>
 
 </body>
 </html>
