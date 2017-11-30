@@ -25,8 +25,8 @@
       <div id="modalBody" class="modal-body">
         <div id="main-menu" class="btn-group-vertical" role="group" aria-label="Basic example">
             <!-- aloitusvalinnat -->
-          <button id="createRoom" type="button" class="btn flash createRoom"><span class="glyphicon glyphicon-plus"></span>  Create Room</button>
-          <button id="EnterRoom" type="button" class="btn flash" onclick="listRooms()"><span id="comment-glyphicon" class="glyphicon glyphicon-comment"></span> Enter Room </button>
+          <button id="createRoom" type="button" class="btn flash createRoom"><span class="glyphicon glyphicon-plus"></span><span id="createRoomText"> Create Room</span></button>
+          <button id="EnterRoom" type="button" class="btn flash" onclick="listRooms()"><span id="comment-glyphicon" class="glyphicon glyphicon-comment"></span><span id="enterRoomText"> Enter Room</span></button>
         </div>
             <!--1 Huoneen luonti -->
             <form id="createRoomForm" role="form">
@@ -75,10 +75,10 @@
 
             <div id="feedback">
             -  <p id="short-roomName">Your room name is too short. At least four characters is required.</p>
-                <p id="roomCreatedMessage">You successfully created a room<br><span></span></p>
+                <p id="roomCreatedMessage">You successfully created room<strong></strong></p>
                 <p id="short-username">Your username is too short. At least five characters is required.</p>
-                <p id="htmlRemoved">Character sequence not allowed</p>
-                <p id="spacesRemoved">Spaces not allowed</p>
+                <p id="htmlRemoved">Character sequence not allowed.</p>
+                <p id="spacesRemoved">Spaces not allowed.</p>
                 <p id="short-password">Your password is too short. At least five characters is required.</p
             </div>
 
@@ -146,6 +146,7 @@
   <script src="js/chat-area.js"></script>
   <script src="js/jquery.nicescroll.js"></script>
   <script src="js/download.js"></script>
+  <script src="js/languageChanger.js"></script>
 
 </body>
 </html>
