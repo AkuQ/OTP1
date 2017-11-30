@@ -1,15 +1,14 @@
-//$('#modal').modal('hide');
-//$('#modal').modal('show');
+$('#modal').modal('show');
 
 //Modal ei häviä vaikka klikkaa sen ulkopuolelle
-/*
 $('#modal').modal({
     backdrop: 'static',
     keyboard: false
-}); */
+});
+
+$('#createRoomForm, #chooseNameForm, #createdRoomsContainer, #roomCreatedMessage, #feedback *, #roomSelected').hide();
 
 
-//$('#modal').show();
 
 clearFields();
 
@@ -60,8 +59,7 @@ function clearFeedback() {
 //modalin piilotus. Huoneeseen liittyminen
 $('#chooseRoom-button').click(function() {
     $('#modal').modal('toggle');
-    //$('#modal').hide();
-    //$('#back-arrow').toggleClass('invisible');
+    $('#back-arrow').toggleClass('invisible');
 
 });
 
@@ -276,9 +274,6 @@ $('#roomSearch').keyup(function() {
 })
 });
 
-$('#modal').modal('show');
-
-$('#createRoomForm, #chooseNameForm, #createdRoomsContainer, #roomCreatedMessage, #feedback *, #roomSelected').hide();
 
 
 //Jos huonelista tyhjä
