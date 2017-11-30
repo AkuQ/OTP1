@@ -7,6 +7,11 @@ var roomCount = 0;
 var userCount = 0;
 var users = {};
 
+window.onload = function(){
+  if(getCookie("loggedIn") == 1){
+    $('#modal').modal('toggle');
+  }
+}
 
 // Aseta keksi, field = keksin nimi ja value = keksin arvo
 function setCookie(field,value) {
@@ -132,6 +137,7 @@ function joinRoom(){
     }
   })
 }
+
 function leaveRoom(){
   console.log("leaveRoom() kutsuttu");
   var sendInfo = {
