@@ -5,10 +5,9 @@ var lastMessage = 0;
 //var userName = $('#username').val();
 var rooms = document.getElementById("createdRooms");
 var roomCount = 0;
+var userCount = 0;
+var users = {};
 
-window.onload = function(){
-
-}
 
 // Aseta keksi, field = keksin nimi ja value = keksin arvo
 function setCookie(field,value) {
@@ -62,6 +61,7 @@ function createUser(){
 
 //Listaa käyttäjät ja lisää ne #group-users elementtiin listamuodossa.
 function listUsers(){
+  console.log("listUsers() called");
   var sendInfo = {
       chat_id: getCookie('chatID')
     }
@@ -73,14 +73,17 @@ function listUsers(){
     contentType: "application/json",
     dataType:"json",
     success: function (data) {
+      console.log(data.error);
       //console.log(data);
-      var users = [];
-      for(var i=0; i<data.result.length; i++){
+      for(var i=userCount; i<data.result.length; i++){
         //users.push(data.result[i].name);
-        users.push([data.result[i].id, data.result[i].name])
+        users[data.result.id] = data.result.name;
         $("#userlist").append("<li>" + data.result[i].name + "</li>");
       }
-      console.log(users);
+      console.log("users objekti:"+users);
+      console.log(users[0]);
+      userCount = data.result.length;
+
     }
   })
 }
@@ -127,6 +130,7 @@ function joinRoom(){
         setCookie("loggedIn","1",)
         connectSocket();
       }
+      updateMessages() ;
     }
   })
 }
@@ -208,8 +212,7 @@ function listRooms(){
     contentType: "application/json",
     dataType:"json",
     success: function (data) {
-      console.log(data.result.error);
-      console.log(data.result[1].name);
+      console.log("Error: "+data.result.error);
         for(var i = roomCount; i < data.result.length; i++){
 
           // Luodaan HTML -elementti, jolle asetetaan luokka ja onClick
@@ -244,14 +247,15 @@ function updateMessages(){
     contentType: "application/json",
     dataType: "json",
     success: function (data) {
-    /*  for(var i=0; i<data.result.length; i++){
+      for(var i=0; i<data.result.length; i++){
         $("#messageList").append("<li>"+getTime()+
-        "|"+"userID ="+ data.result[i].userID +"|||"+ data.result[i].message + "</li>");
-        lastMessage = data.result[i].id;
-    */
+        " ||| "+"userID = "+ data.result[i].user_id +"<br>"+ data.result[i].message + "</li>");
+      }
+    /*
       for(var i=0; i<data.result.length; i++){
         console.log(data.result[i].message);
       }
+    */
       lastMessage = data.result.length;
     }
   })
@@ -262,8 +266,7 @@ function sendMessage(){
   var sendInfo = {
     user_id: getCookie('userID'),
     chat_id: getCookie('chatID'),
-    //message: $("#textArea").val(),
-    message: "Buujah"
+    message: $("#textArea").val()
   }
 
   $.ajax({
@@ -273,9 +276,10 @@ function sendMessage(){
     contentType: "application/json",
     dataType:"json",
     success: function (data) {
-      console.log(data);
+      //console.log(data.result.id);
     }
   })
+  updateMessages();
   $("#textArea").val() = "";
   */
 }
