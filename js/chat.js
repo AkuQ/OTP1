@@ -1,5 +1,6 @@
 var userID = getCookie("userID");
 var chatID = getCookie("chatID");
+var socket;
 var lastMessage = 0;
 //var userName = $('#username').val();
 var rooms = document.getElementById("createdRooms");
@@ -132,10 +133,56 @@ function joinRoom(){
       if(data.result === 1){
         //Onko käyttäjä huoneessa 1 = on, 0 = ei
         setCookie("loggedIn","1",)
+        connectSocket();
       }
       updateMessages() ;
     }
   })
+}
+
+function connectSocket() {
+  socket = io("http://10.114.34.17:5000/", {query: {chat_id: chatID, user_id: userID, token:"asd"}});
+
+  socket.on('updated', (text) => {
+     // document.getElementById("text").value = text;
+      //$("working-area").val() = text;
+      });
+
+
+  socket.on('error', function (err) {
+      console.log(err.type);
+  });
+
+
+  function update() {
+     // text = document.getElementById("text").value;
+     // socket.emit('update', text);
+  }
+
+
+  socket.on('update messages', function(msg) {
+      $("#messagelist").append("<li>" + msg.user + ": " + msg.content + "</li>");
+  });
+
+  socket.on('update users', function(user) {
+    // $("#userlist").append("<li>" + user.name + "</li>");
+      listUsers();
+  });
+
+  socket.on('user disconnect', function() {
+      listUsers();
+  });
+
+ }
+
+function sendMessage() {
+    let message = $("#textArea").val();
+    let msg = {userID: getCookie('user_id'),
+                    chatID: getCookie('chat_id'),
+                    content: message,
+                    /*token: getCookie('token')*/};
+    socket.emit('post message', msg);
+    $("#textArea").val() = "";
 }
 
 function leaveRoom(){
@@ -218,7 +265,7 @@ function updateMessages(){
     }
   })
 }
-
+/*
 function sendMessage(){
   console.log("SendMessage() kutsuttu");
   var sendInfo = {
@@ -239,4 +286,5 @@ function sendMessage(){
   })
   updateMessages();
   $("#textArea").val() = "";
+  */
 }
