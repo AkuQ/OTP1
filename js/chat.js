@@ -8,6 +8,12 @@ var roomCount = 0;
 var userCount = 0;
 var users = {};
 
+window.onload = function(){
+  if(getCookie("loggedIn") == 1){
+    $('#modal').modal('toggle');
+    joinRoom();
+  }
+}
 
 // Aseta keksi, field = keksin nimi ja value = keksin arvo
 function setCookie(field,value) {
@@ -135,8 +141,8 @@ function joinRoom(){
   })
 }
 
-function connectSocket() {  
-  socket = io("http://10.114.34.17:5000/", {query: {chat_id: chatID, user_id: userID, token:"asd"}});
+function connectSocket() {
+  socket = io("http://10.114.34.17:5000/", {query: {chat_id: getCookie('chatID'), user_id: getCookie('userID'), token:"asd"}});
 
   socket.on('updated', (text) => {
      // document.getElementById("text").value = text;
@@ -154,9 +160,9 @@ function connectSocket() {
      // socket.emit('update', text);
   }
 
-  
+
   socket.on('update messages', function(msg) {
-      $("#messagelist").append("<li>" + msg.user + ": " + msg.content + "</li>");
+      $("#messagelist").append("<li>" + ": " + msg.content + "</li>");
   });
 
   socket.on('update users', function(user) {
@@ -167,13 +173,13 @@ function connectSocket() {
   socket.on('user disconnect', function() {
       listUsers();
   });
-    
+
  }
 
 function sendMessage() {
     let message = $("#textArea").val();
-    let msg = {userID: getCookie('user_id'),
-                    chatID: getCookie('chat_id'),
+    let msg = {userID: getCookie('userID'),
+                    chatID: getCookie('chatID'),
                     content: message,
                     /*token: getCookie('token')*/};
     socket.emit('post message', msg);
@@ -282,4 +288,3 @@ function sendMessage(){
   updateMessages();
   $("#textArea").val() = "";
   */
-}
