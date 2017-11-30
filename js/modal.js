@@ -92,15 +92,20 @@ $('#back-arrow').click(function() {
 });
 //enter room -valikkoon
 $('#EnterRoom').click(function() {
-    clearFeedback();
-    clearFields();
+  clearFeedback();
+  clearFields();
+  $('#roomSearch').css('background', 'rgb(213,220,237) url(images/search.png) right no-repeat');
+  $('#roomSearch').css('background-size', '23px 23px');
+  $('#roomSearch').css('background-origin', 'content-box');
+  if(getCookie('userID') == undefined ){
     $('#createRoom, #EnterRoom').fadeOut(150);
     $('#chooseNameForm').delay(150).fadeIn(150);
     $('#back-arrow').removeClass('invisible');
-    $('#roomSearch').css('background', 'rgb(213,220,237) url(images/search.png) right no-repeat');
-    $('#roomSearch').css('background-size', '23px 23px');
-    $('#roomSearch').css('background-origin', 'content-box');
-
+  } else {
+    $('#createRoom, #EnterRoom').fadeOut(150);
+    $('#createdRoomsContainer').delay(150).fadeIn(150);
+    $('#back-arrow').removeClass('invisible');
+  }
 });
 //huoneen luonti
 $('#CreateRoom-button').click(function() {
@@ -293,4 +298,3 @@ $('#logout').click(function() {
   $(this).append("<li>No Rooms to enter</li>");
 
 } */
-

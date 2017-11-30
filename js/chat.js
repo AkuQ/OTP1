@@ -183,7 +183,7 @@ function sendMessage() {
                     content: message,
                     /*token: getCookie('token')*/};
     socket.emit('post message', msg);
-    $("#textArea").val() = "";
+    $("#textArea").val("");
 }
 
 function leaveRoom(){
