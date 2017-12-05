@@ -288,13 +288,52 @@ function fetchWorkspace() {
     contentType: "application/json",
     dataType: "json",
     success: function (data) {
-      $("working-area").val() = data.content;
+      $("working-area").text(data.result.content)
+      setCookie("lastUpdate", content.result.last_update)
       }
     })
 
 }
 function updateWorkspace() {
 
+  var sendInfo = {
+    chat_id: getCookie('chatID'),
+    since: getCookie('lastUpdate'),
+    caret_pos: 2
+  }
+  $.ajax({
+    type: "POST",
+    url: "/workspaces/update",
+    data: JSON.stringify(sendInfo),
+    contentType: "application/json",
+    dataType: "json",
+    success: function (data) {
+      $("working-area").text(data.content);
+      setCookie("lastUpdate", data.result.updates.id);
+      if (data.result.updates.mode === "insert") {
+        inputWorkspaceText({text:data.result.updates.input, pos:data.result.updates.pos})
+      } else {
+        removeWorkspaceText(data.result.updates.pos, data.result.updates.len);
+      }
+      }
+    })
+}
+
+function inputWorkspaceText(updObj) {
+  var txt = $("working-area").val();
+  var newTxt = txt.slice(0, updObj.pos) + updObj.text + txt.slice(updObj.pos);
+  $("working-area").text(newTxt);
+}
+
+function removeWorkspaceText(pos, len) {
+  var txt = $("working-area").val();
+  var newTxt = cut(txt, pos, pos+len)
+  
+  function cut(text, cutStart, cutEnd) {
+    return text.substr(0,cutStart) + str.substr(cutEnd+1);
+  }
+  
+  $("working-area").text(newTxt);
 }
 /*
 function sendMessage(){
