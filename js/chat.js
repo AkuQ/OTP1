@@ -174,6 +174,15 @@ function connectSocket() {
       listUsers();
   });
 
+  var input = $("working-area");
+  
+              input.addEventListener("keyup", function () {
+                  console.log(this.selectionStart);
+                  update();
+  
+                  // You can also set the caret: this.selectionStart = 2;
+              });
+
  }
 
 function sendMessage() {
@@ -265,6 +274,27 @@ function updateMessages(){
       lastMessage = data.result.length;
     }
   })
+}
+function fetchWorkspace() {
+  
+  var sendInfo = {
+    chat_id: getCookie('chatID')
+  }
+
+  $.ajax({
+    type: "POST",
+    url: "/workspaces/content",
+    data: JSON.stringify(sendInfo),
+    contentType: "application/json",
+    dataType: "json",
+    success: function (data) {
+      $("working-area").val() = data.content;
+      }
+    })
+
+}
+function updateWorkspace() {
+
 }
 /*
 function sendMessage(){
