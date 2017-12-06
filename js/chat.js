@@ -176,7 +176,7 @@ function connectSocket() {
 
   var input = $("working-area");
   
-              input.addEventListener("keyup", function () {
+              input.addEventListener("keypress", function () {
                   console.log(this.selectionStart);
                   update();
   
@@ -332,9 +332,55 @@ function removeWorkspaceText(pos, len) {
   function cut(text, cutStart, cutEnd) {
     return text.substr(0,cutStart) + str.substr(cutEnd+1);
   }
-  
+
   $("working-area").text(newTxt);
 }
+
+function workspaceInsert(obj) {
+
+
+  var sendInfo = {
+    chat_id: getCookie('chatID'),
+    since: getCookie('lastUpdate'),
+    caret_pos: 2,
+    pos: 1,
+    input: obj.input
+
+  }
+  $.ajax({
+    type: "POST",
+    url: "/workspaces/insert",
+    data: JSON.stringify(sendInfo),
+    contentType: "application/json",
+    dataType: "json",
+    success: function (data) {
+        setCookie("lastUpdate", data.result);
+    
+      }
+    })
+}
+
+function workspaceRemove(obj) {
+  
+  
+    var sendInfo = {
+      chat_id: getCookie('chatID'),
+      since: getCookie('lastUpdate'),
+      pos: 1,
+      len: 1,
+    }
+    $.ajax({
+      type: "POST",
+      url: "/workspaces/insert",
+      data: JSON.stringify(sendInfo),
+      contentType: "application/json",
+      dataType: "json",
+      success: function (data) {
+          setCookie("lastUpdate", data.result);
+      
+        }
+      })
+  }
 /*
 function sendMessage(){
   console.log("SendMessage() kutsuttu");
