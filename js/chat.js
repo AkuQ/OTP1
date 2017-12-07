@@ -7,6 +7,7 @@ var rooms = document.getElementById("createdRooms");
 var roomCount = 0;
 var userCount = 0;
 var users = {};
+var textbuffer = "";
 
 window.onload = function(){
   if(getCookie("loggedIn") == 1){
@@ -51,18 +52,13 @@ function createUser(){
   console.log("createUser() called");
   var sendInfo = {
     name : $('#username').val()
-  }
+  };
 
-  $.ajax({
-    type: "POST",
-    url: "/api/users/create",
-    data: JSON.stringify(sendInfo),
-    contentType: "application/json",
-    dataType:"json",
-    success: function (data) {
-      setCookie("userID", data.result.id);
-    }
-  })
+  api_ajax('/users/create', sendInfo, {
+      success: function (data) {
+          setCookie("userID", data.result.id);
+      }
+  });
 }
 
 //Listaa käyttäjät ja lisää ne #group-users elementtiin listamuodossa.
@@ -70,28 +66,23 @@ function listUsers(){
   console.log("listUsers() called");
   var sendInfo = {
       chat_id: getCookie('chatID')
-    }
+    };
 
-  $.ajax({
-    type: "POST",
-    url: "/api/users/list",
-    data: JSON.stringify(sendInfo),
-    contentType: "application/json",
-    dataType:"json",
-    success: function (data) {
-      console.log(data.error);
-      //console.log(data);
-      for(var i=userCount; i<data.result.length; i++){
-        //users.push(data.result[i].name);
-        users[data.result.id] = data.result.name;
-        $("#userlist").append("<li>" + data.result[i].name + "</li>");
+  api_ajax("/users/list", sendInfo, {
+      success: function (data) {
+          console.log(data.error);
+          //console.log(data);
+          for(var i=userCount; i<data.result.length; i++){
+              //users.push(data.result[i].name);
+              users[data.result.id] = data.result.name;
+              $("#userlist").append("<li>" + data.result[i].name + "</li>");
+          }
+          console.log("users objekti:"+users);
+          console.log(users[0]);
+          userCount = data.result.length;
+
       }
-      console.log("users objekti:"+users);
-      console.log(users[0]);
-      userCount = data.result.length;
-
-    }
-  })
+  });
 }
 
 
@@ -99,19 +90,14 @@ function createRoom(){
   var sendInfo = {
     name: $("#roomName").val(),
     password: $("#roomPassword").val()
-    }
+    };
 
-  $.ajax({
-    type: "POST",
-    url: "/api/rooms/create",
-    data: JSON.stringify(sendInfo),
-    contentType: "application/json",
-    dataType:"json",
-    success: function (data) {
-      console.log(data);
-      this.chatID = data.result;
-    }
-  })
+  api_ajax("/rooms/create", sendInfo, {
+      success: function (data) {
+          console.log(data);
+          this.chatID = data.result;
+      }
+  });
 }
 
 function joinRoom(){
@@ -122,25 +108,20 @@ function joinRoom(){
     chat_id:getCookie('chatID'),
     user_id: getCookie('userID'),
     password: password
-    }
+    };
 
-  $.ajax({
-    type: "POST",
-    url: "/api/rooms/join",
-    data: JSON.stringify(sendInfo),
-    contentType: "application/json",
-    dataType:"json",
-    success: function (data) {
-      console.log("1 = Kirjautuminen onnistui, 0 = epäonnistui");
-      console.log("Tulos:"+data.result);
-      if(data.result === 1){
-        //Onko käyttäjä huoneessa 1 = on, 0 = ei
-        setCookie("loggedIn","1",)
-        connectSocket();
-      }
-      updateMessages();
-    }
-  })
+    api_ajax("/rooms/join", sendInfo, {
+        success: function (data) {
+            console.log("1 = Kirjautuminen onnistui, 0 = epäonnistui");
+            console.log("Tulos:"+data.result);
+            if(data.result === 1){
+                //Onko käyttäjä huoneessa 1 = on, 0 = ei
+                setCookie("loggedIn","1");
+                connectSocket();
+            }
+            updateMessages();
+        }
+    });
 }
 
 function connectSocket() {
@@ -199,52 +180,43 @@ function leaveRoom(){
   var sendInfo = {
     chat_id:getCookie('chatID'),
     user_id: getCookie('userID')
-    }
+    };
 
-  $.ajax({
-    type: "POST",
-    url: "/api/rooms/leave",
-    data: JSON.stringify(sendInfo),
-    contentType: "application/json",
-    dataType:"json",
-    success: function (data) {
-      console.log("1 = Uloskirjautuminen onnistui, 0 = epäonnistui");
-      console.log("Tulos:"+data.result);
-      if(data.result === 1){
-        //Onko käyttäjä huoneessa 1 = on, 0 = ei
-        setCookie("loggedIn","0",)
+  api_ajax("/rooms/leave", sendInfo, {
+      success: function (data) {
+          console.log("1 = Uloskirjautuminen onnistui, 0 = epäonnistui");
+          console.log("Tulos:"+data.result);
+          if(data.result === 1){
+              //Onko käyttäjä huoneessa 1 = on, 0 = ei
+              setCookie("loggedIn","0");
+          }
       }
-    }
-  })
+  });
 }
 
 function listRooms(){
   console.log("Listrooms called");
-  $.ajax({
-    type: "POST",
-    url: "/api/rooms/list",
-    contentType: "application/json",
-    dataType:"json",
-    success: function (data) {
-      console.log("Error: "+data.result.error);
-        for(var i = roomCount; i < data.result.length; i++){
 
-          // Luodaan HTML -elementti, jolle asetetaan luokka ja onClick
-          // eventlistener. Klikatessa kyseisen elementin "chatID" tallentuu
-          // selaimen kekseihin
-          rooms.innerHTML +=
-          "<li onclick='setCookie(`chatID`,"+data.result[i].id+
-          ")' class='listedRoom listedRoom-hover'>"+
-          data.result[i].name+"</li>";
-        }
+  api_ajax("/rooms/list", {}, {
+      success: function (data) {
+          console.log("Error: "+data.result.error);
+          for(var i = roomCount; i < data.result.length; i++){
 
-      // Tällä pidetään kirjaa "rooms" listan pituudesta, ja estetään
-      // huoneiden tuominen listaan kahteen kertaan.
-      roomCount = data.result.length;
-      console.log("Huoneita listassa: "+roomCount);
+              // Luodaan HTML -elementti, jolle asetetaan luokka ja onClick
+              // eventlistener. Klikatessa kyseisen elementin "chatID" tallentuu
+              // selaimen kekseihin
+              rooms.innerHTML +=
+                  "<li onclick='setCookie(`chatID`,"+data.result[i].id+
+                  ")' class='listedRoom listedRoom-hover'>"+
+                  data.result[i].name+"</li>";
+          }
 
-    }
-  })
+          // Tällä pidetään kirjaa "rooms" listan pituudesta, ja estetään
+          // huoneiden tuominen listaan kahteen kertaan.
+          roomCount = data.result.length;
+          console.log("Huoneita listassa: "+roomCount);
+      }
+  });
 }
 
 function updateMessages(){
@@ -252,86 +224,56 @@ function updateMessages(){
   var sendInfo = {
       chat_id: getCookie('chatID'),
       since: lastMessage
-    }
+    };
 
-  $.ajax({
-    type: "POST",
-    url: "/api/messages/list",
-    data: JSON.stringify(sendInfo),
-    contentType: "application/json",
-    dataType: "json",
-    success: function (data) {
-      console.log(data);
-      for(var i=0; i<data.result.length; i++){
-        $("#messagelist").append("<li>"+getTime()+
-        " ||| "+"userID = "+ data.result[i].user_id +"<br>"+ data.result[i].message + "</li>");
+  api_ajax("/messages/list", sendInfo, {
+      success: function (data) {
+          console.log(data);
+          for(var i=0; i<data.result.length; i++){
+              $("#messagelist").append("<li>"+getTime()+
+                  " ||| "+"userID = "+ data.result[i].user_id +"<br>"+ data.result[i].message + "</li>");
+          }
+          /*
+            for(var i=0; i<data.result.length; i++){
+              console.log(data.result[i].message);
+            }
+          */
+          lastMessage = data.result.length;
       }
-    /*
-      for(var i=0; i<data.result.length; i++){
-        console.log(data.result[i].message);
-      }
-    */
-      lastMessage = data.result.length;
-    }
-  })
+  });
 }
+
 function fetchWorkspace() {
-  
   var sendInfo = {
     chat_id: getCookie('chatID')
-  }
+  };
 
-  $.ajax({
-    type: "POST",
-    url: "/workspaces/content",
-    data: JSON.stringify(sendInfo),
-    contentType: "application/json",
-    dataType: "json",
-    success: function (data) {
-      $("#working-area").text(data.result.content)
-      setCookie("lastUpdate", content.result.last_update)
+  api_ajax("/workspaces/content", sendInfo, {
+      success: function (data) {
+          $("#working-area").text(data.result.content);
+          setCookie("lastUpdate", content.result.last_update);
       }
-    })
-
+  });
 }
+
 function updateWorkspace() {
   var sendInfo = {
     chat_id: getCookie('chatID'),
     since: getCookie('lastUpdate'),
     caret_pos: 2
-  }
-  $.ajax({
-    type: "POST",
-    url: "/workspaces/update",
-    data: JSON.stringify(sendInfo),
-    contentType: "application/json",
-    dataType: "json",
-    success: function (data) {
-      $("#working-area").text(data.content);
-      setCookie("lastUpdate", data.result.updates.id);
-      if (data.result.updates.mode === "insert") {
-        inputWorkspaceText({text:data.result.updates.input, pos:data.result.updates.pos})
-      } else {
-        removeWorkspaceText(data.result.updates.pos, data.result.updates.len);
-      }
-      }
-    })
-}
+  };
 
-function inputWorkspaceText(updObj) {
-  var txt = $("#working-area").val();
-  var newTxt = txt.slice(0, updObj.pos) + updObj.text + txt.slice(updObj.pos);
-  $("#working-area").text(newTxt);
-}
-
-function removeWorkspaceText(pos, len) {
-  var txt = $("#working-area").val();
-  var newTxt = cut(txt, pos, pos+len)
-  
-  function cut(text, cutStart, cutEnd) {
-    return text.substr(0,cutStart) + str.substr(cutEnd+1);
-  }
-  $("#working-area").text(newTxt);
+  api_ajax("/workspaces/updates", sendInfo, {
+      success: function (data) {
+          $("#working-area").text(data.content);
+          setCookie("lastUpdate", data.result.updates.id);
+          if (data.result.updates.mode === "insert") {
+              inputWorkspaceText({text:data.result.updates.input, pos:data.result.updates.pos})
+          } else {
+              removeWorkspaceText(data.result.updates.pos, data.result.updates.len);
+          }
+      }
+  });
 }
 
 function workspaceInsert(pos) {
@@ -344,41 +286,28 @@ function workspaceInsert(pos) {
     caret_pos: pos,
     pos: pos,
     input: input
+  };
 
-  }
-  $.ajax({
-    type: "POST",
-    url: "/workspaces/insert",
-    data: JSON.stringify(sendInfo),
-    contentType: "application/json",
-    dataType: "json",
-    success: function (data) {
-        setCookie("lastUpdate", data.result);
-    
+  api_ajax("/workspaces/insert", sendInfo, {
+      success: function (data) {
+          setCookie("lastUpdate", data.result);
       }
-    })
+  });
 }
 
 function workspaceRemove(obj) {
-  
-  
     var sendInfo = {
       chat_id: getCookie('chatID'),
       since: getCookie('lastUpdate'),
       pos: 1,
-      len: 1,
-    }
-    $.ajax({
-      type: "POST",
-      url: "/workspaces/insert",
-      data: JSON.stringify(sendInfo),
-      contentType: "application/json",
-      dataType: "json",
-      success: function (data) {
-          setCookie("lastUpdate", data.result);
-      
+      len: 1
+    };
+
+    api_ajax("/workspaces/insert", sendInfo, {
+        success: function (data) {
+            setCookie("lastUpdate", data.result);
         }
-      })
+    });
   }
 /*
 function sendMessage(){
@@ -402,3 +331,34 @@ function sendMessage(){
   updateMessages();
   $("#textArea").val() = "";
   */
+
+// Helper functions:
+
+function inputWorkspaceText(updObj) {
+    var txt = $("#working-area").val();
+    var newTxt = txt.slice(0, updObj.pos) + updObj.text + txt.slice(updObj.pos);
+    $("#working-area").text(newTxt);
+}
+
+function removeWorkspaceText(pos, len) {
+    var txt = $("#working-area").val();
+    var newTxt = cut(txt, pos, pos+len)
+
+    function cut(text, cutStart, cutEnd) {
+        return text.substr(0,cutStart) + str.substr(cutEnd+1);
+    }
+    $("#working-area").text(newTxt);
+}
+
+// API handler:
+
+function api_ajax(route, data_params, ajax_params){
+    var call = Object.assign({
+        type: "POST",
+        url: '/api'+ route,
+        data: JSON.stringify(data_params),
+        contentType: "application/json",
+        dataType: "json"
+    }, ajax_params);
+    $.ajax(call);
+}
