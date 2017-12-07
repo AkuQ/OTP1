@@ -40,6 +40,7 @@
 
             <!--2 Huoneeseen liittyminen -->
             <div id="createdRoomsContainer">
+              <p>Choose room</p>
               <input id="roomSearch" type="text" maxlength="20" placeholder="search room">
               <ul id="createdRooms" class="multi-column">
                   <li class="listedRoom listedRoom-hover">huone</li>
@@ -75,11 +76,18 @@
 
             <div id="feedback">
             -  <p id="short-roomName">Your room name is too short. At least four characters is required.</p>
-                <p id="roomCreatedMessage">You successfully created room<strong></strong></p>
+                <div>
+                  <span id="roomCreatedMessage">You successfully created room</span>
+                  <br>
+                  <strong id="createdRoom"></strong>
+                  <br>
+                  <span id="dismiss-glyphicon" class="glyphicon glyphicon-remove btn"></span>
+                  <button id="enter-now-button" class="btn btn-default chooseRoom-hover roomCreated-button">Join</button>
+                </div>
                 <p id="short-username">Your username is too short. At least five characters is required.</p>
                 <p id="htmlRemoved">Character sequence not allowed.</p>
                 <p id="spacesRemoved">Spaces not allowed.</p>
-                <p id="short-password">Your password is too short. At least five characters is required.</p>
+                <p id="short-password">Your password is too short. At least six characters is required.</p>
             </div>
 
       </div>
@@ -137,6 +145,9 @@
 
   </div>
 </div>
+  <script>
+  var room = undefined;
+  </script>
   <script src="js/expand.js"></script>
   <script src="js/modal.js"></script>
   <script src="js/chat.js"></script>
