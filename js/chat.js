@@ -116,10 +116,12 @@ function createRoom(){
 
 function joinRoom(){
   console.log("joinRoom() kutsuttu");
+  let password = $("passwordRequired").val();
+  console.log(password);
   var sendInfo = {
     chat_id:getCookie('chatID'),
     user_id: getCookie('userID'),
-    password: "default"
+    password: "salasana"
     }
 
   $.ajax({
@@ -136,7 +138,7 @@ function joinRoom(){
         setCookie("loggedIn","1",)
         connectSocket();
       }
-      updateMessages() ;
+      updateMessages();
     }
   })
 }
@@ -144,9 +146,8 @@ function joinRoom(){
 function connectSocket() {
   socket = io("http://10.114.34.17:5000/", {query: {chat_id: getCookie('chatID'), user_id: getCookie('userID'), token:"asd"}});
 
-  socket.on('updated', (text) => {
-     // document.getElementById("text").value = text;
-      //$("working-area").val() = text;
+  socket.on('update workspace', () => {
+       updateWorkspace();
       });
 
 
@@ -161,8 +162,9 @@ function connectSocket() {
   }
 
 
-  socket.on('update messages', function(msg) {
-      $("#messagelist").append("<li>" + ": " + msg.content + "</li>");
+  socket.on('update messages', function() {
+    console.log("päivitä viestejä");
+    updateMessages();
   });
 
   socket.on('update users', function(user) {
@@ -174,21 +176,18 @@ function connectSocket() {
       listUsers();
   });
 
-  var input = $("working-area");
-  
-              input.addEventListener("keypress", function () {
-                  console.log(this.selectionStart);
-                  update();
-  
-                  // You can also set the caret: this.selectionStart = 2;
-              });
+  var input = document.getElementById("working-area");
+  input.addEventListener("keypress", function () {
+    inputWorkspaceText(this.selectionStart);       
+  });
 
- }
+}
 
 function sendMessage() {
     let message = $("#textArea").val();
-    let msg = {userID: getCookie('userID'),
-                    chatID: getCookie('chatID'),
+    console.log(message);
+    let msg = {user_id: getCookie('userID'),
+                    chat_id: getCookie('chatID'),
                     content: message,
                     /*token: getCookie('token')*/};
     socket.emit('post message', msg);
@@ -251,7 +250,7 @@ function listRooms(){
 function updateMessages(){
   console.log("updateMessages() kutsuttu")
   var sendInfo = {
-      chat_id: chatID,
+      chat_id: getCookie('chatID'),
       since: lastMessage
     }
 
@@ -262,8 +261,9 @@ function updateMessages(){
     contentType: "application/json",
     dataType: "json",
     success: function (data) {
+      console.log(data);
       for(var i=0; i<data.result.length; i++){
-        $("#messageList").append("<li>"+getTime()+
+        $("#messagelist").append("<li>"+getTime()+
         " ||| "+"userID = "+ data.result[i].user_id +"<br>"+ data.result[i].message + "</li>");
       }
     /*
@@ -295,7 +295,6 @@ function fetchWorkspace() {
 
 }
 function updateWorkspace() {
-
   var sendInfo = {
     chat_id: getCookie('chatID'),
     since: getCookie('lastUpdate'),
@@ -332,19 +331,19 @@ function removeWorkspaceText(pos, len) {
   function cut(text, cutStart, cutEnd) {
     return text.substr(0,cutStart) + str.substr(cutEnd+1);
   }
-
   $("working-area").text(newTxt);
 }
 
-function workspaceInsert(obj) {
+function workspaceInsert(pos) {
 
+  var input = $("working-area").val().charAt(pos);
 
   var sendInfo = {
     chat_id: getCookie('chatID'),
     since: getCookie('lastUpdate'),
-    caret_pos: 2,
-    pos: 1,
-    input: obj.input
+    caret_pos: pos,
+    pos: pos,
+    input: input
 
   }
   $.ajax({
