@@ -7,6 +7,7 @@ var rooms = document.getElementById("createdRooms");
 var roomCount = 0;
 var userCount = 0;
 var users = {};
+var textbuffer = "";
 
 window.onload = function(){
   if(getCookie("loggedIn") == 1){
@@ -176,10 +177,49 @@ function connectSocket() {
       listUsers();
   });
 
+
   var input = document.getElementById("working-area");
+  /*
   input.addEventListener("keypress", function () {
-    inputWorkspaceText(this.selectionStart);       
+    var pos = this.selectionStart;
+    var char = $("#working-area").val().charAt(pos);
+    
+      var update = {
+        chat_id: getCookie('chatID'),
+        since: getCookie('lastUpdate'),
+        caret_pos: pos,
+        pos: pos,
+        input: char
+      }
+    
+    socket.emit("edit workspace", update);      
   });
+*/
+  input.on('keypress', function() {
+      var pos = this.selectionStart;
+      var char = $("#working-area").val().charAt(pos);
+    
+      var update = {
+        since: getCookie('lastUpdate'),
+        pos: pos,
+        insert: char
+      }
+      console.log(update);
+      
+    socket.emit("edit workspace", update);    
+  }).on('keydown', function(e) {
+    if (e.keyCode==8)
+    var pos = this.selectionEnd;
+
+      var update = {
+        since: getCookie('lastUpdate'),
+        pos: pos,
+        remove: 1
+      }
+      console.log(update);      
+      socket.emit("edit workspace", update);
+  });
+  
 
 }
 
