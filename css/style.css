@@ -53,6 +53,15 @@ body {
   height: 100%;
   -moz-border-right: thick groove #666666;
   border-radius: 2px;
+  color: rgb(232, 232, 232);
+}
+
+#messagelist {
+  padding-left: 5px;
+}
+
+#messagelist > li {
+  list-style-type: none;
 }
 
 #rightContent{
