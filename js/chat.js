@@ -116,12 +116,12 @@ function createRoom(){
 
 function joinRoom(){
   console.log("joinRoom() kutsuttu");
-  let password = $("passwordRequired").val();
+  let password = $("#passwordRequired").val();
   console.log(password);
   var sendInfo = {
     chat_id:getCookie('chatID'),
     user_id: getCookie('userID'),
-    password: "salasana"
+    password: password
     }
 
   $.ajax({
@@ -288,7 +288,7 @@ function fetchWorkspace() {
     contentType: "application/json",
     dataType: "json",
     success: function (data) {
-      $("working-area").text(data.result.content)
+      $("#working-area").text(data.result.content)
       setCookie("lastUpdate", content.result.last_update)
       }
     })
@@ -307,7 +307,7 @@ function updateWorkspace() {
     contentType: "application/json",
     dataType: "json",
     success: function (data) {
-      $("working-area").text(data.content);
+      $("#working-area").text(data.content);
       setCookie("lastUpdate", data.result.updates.id);
       if (data.result.updates.mode === "insert") {
         inputWorkspaceText({text:data.result.updates.input, pos:data.result.updates.pos})
@@ -319,24 +319,24 @@ function updateWorkspace() {
 }
 
 function inputWorkspaceText(updObj) {
-  var txt = $("working-area").val();
+  var txt = $("#working-area").val();
   var newTxt = txt.slice(0, updObj.pos) + updObj.text + txt.slice(updObj.pos);
-  $("working-area").text(newTxt);
+  $("#working-area").text(newTxt);
 }
 
 function removeWorkspaceText(pos, len) {
-  var txt = $("working-area").val();
+  var txt = $("#working-area").val();
   var newTxt = cut(txt, pos, pos+len)
   
   function cut(text, cutStart, cutEnd) {
     return text.substr(0,cutStart) + str.substr(cutEnd+1);
   }
-  $("working-area").text(newTxt);
+  $("#working-area").text(newTxt);
 }
 
 function workspaceInsert(pos) {
 
-  var input = $("working-area").val().charAt(pos);
+  var input = $("#working-area").val().charAt(pos);
 
   var sendInfo = {
     chat_id: getCookie('chatID'),
