@@ -122,8 +122,7 @@ function joinRoom(){
                   $('#wrong-password').fadeIn(150);
                   $('#wrong-password').delay(5000).fadeOut(150);
               }
-            }
-            updateMessages();
+              updateMessages();
         }
     });
 }
