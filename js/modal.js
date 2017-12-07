@@ -61,13 +61,14 @@ function clearFeedback() {
 //modalin piilotus. Huoneeseen liittyminen
 $('#chooseRoom-button').click(function() {
     clearFeedback();
-    $('#roomSelected').fadeOut(150);
-    /*if(getCookie('userID') == undefined ){
+    /*
+    /$('#roomSelected').fadeOut(150);
+    if(getCookie('userID') == undefined ){
       clearFields();
       $('#chooseNameForm').delay(150).fadeIn(150);
     } else {
       $('#modal').modal('toggle');
-    } */
+    }  */
     $('#back-arrow').addClass('invisible');
     $('#choosename-button').prop('disabled', true)
 });

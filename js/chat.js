@@ -109,52 +109,31 @@ function joinRoom(){
     user_id: getCookie('userID'),
     password: password
     }
-/*
-  $.ajax({
-    type: "POST",
-    url: "/api/rooms/join",
-    data: JSON.stringify(sendInfo),
-    contentType: "application/json",
-    dataType:"json",
-    success: function (data) {
-      console.log("1 = Kirjautuminen onnistui, 0 = epäonnistui");
-      console.log("Tulos:"+data.result);
-      if(data.result === 1){
-        //Onko käyttäjä huoneessa 1 = on, 0 = ei
-        $('#roomSelected').fadeOut(150);
-        clearFields();
-        $('#chooseNameForm').delay(150).fadeIn(150);
-        setCookie("loggedIn","1",)
-        connectSocket();
-      } else {
-        $('#wrong-password').fadeIn(150);
-        $('#wrong-password').delay(5000).fadeOut(150);
-      }
-      updateMessages() ;
-    }
-  })
-    };
-*/
+
     api_ajax("/rooms/join", sendInfo, {
         success: function (data) {
             console.log("1 = Kirjautuminen onnistui, 0 = epäonnistui");
             console.log("Tulos:"+data.result);
             if(data.result === 1){
                 //Onko käyttäjä huoneessa 1 = on, 0 = ei
-                $('#roomSelected').fadeOut(150);
-                 clearFields();
-                  $('#chooseNameForm').delay(150).fadeIn(150);
+                  if(getCookie('userID') == undefined ){
+                    $('#roomSelected').fadeOut(150);
+                    $('#chooseNameForm').delay(150).fadeIn(150);
+                  } else {
+                    $('#modal').modal('toggle');
+                  }
+                  clearFields();
                   setCookie("loggedIn","1",)
                   connectSocket();
               } else {
                   $('#wrong-password').fadeIn(150);
                   $('#wrong-password').delay(5000).fadeOut(150);
               }
+              updateMessages();
             }
-            updateMessages();
         }
-    });
-}
+    }
+
 
 function connectSocket() {
   socket = io("http://10.114.34.17:5000/", {query: {chat_id: getCookie('chatID'), user_id: getCookie('userID'), token:"asd"}});
@@ -195,7 +174,7 @@ function connectSocket() {
   input.addEventListener("keypress", function () {
     var pos = this.selectionStart;
     var char = $("#working-area").val().charAt(pos);
-    
+
       var update = {
         chat_id: getCookie('chatID'),
         since: getCookie('lastUpdate'),
@@ -203,22 +182,22 @@ function connectSocket() {
         pos: pos,
         input: char
       }
-    
-    socket.emit("edit workspace", update);      
+
+    socket.emit("edit workspace", update);
   });
 */
   input.on('keypress', function() {
       var pos = this.selectionStart;
       var char = $("#working-area").val().charAt(pos);
-    
+
       var update = {
         since: getCookie('lastUpdate'),
         pos: pos,
         insert: char
       }
       console.log(update);
-      
-    socket.emit("edit workspace", update);    
+
+    socket.emit("edit workspace", update);
   }).on('keydown', function(e) {
     if (e.keyCode==8)
     var pos = this.selectionEnd;
@@ -228,10 +207,10 @@ function connectSocket() {
         pos: pos,
         remove: 1
       }
-      console.log(update);      
+      console.log(update);
       socket.emit("edit workspace", update);
   });
-  
+
 
 }
 
