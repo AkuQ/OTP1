@@ -108,16 +108,48 @@ function joinRoom(){
     chat_id:getCookie('chatID'),
     user_id: getCookie('userID'),
     password: password
+    }
+/*
+  $.ajax({
+    type: "POST",
+    url: "/api/rooms/join",
+    data: JSON.stringify(sendInfo),
+    contentType: "application/json",
+    dataType:"json",
+    success: function (data) {
+      console.log("1 = Kirjautuminen onnistui, 0 = epäonnistui");
+      console.log("Tulos:"+data.result);
+      if(data.result === 1){
+        //Onko käyttäjä huoneessa 1 = on, 0 = ei
+        $('#roomSelected').fadeOut(150);
+        clearFields();
+        $('#chooseNameForm').delay(150).fadeIn(150);
+        setCookie("loggedIn","1",)
+        connectSocket();
+      } else {
+        $('#wrong-password').fadeIn(150);
+        $('#wrong-password').delay(5000).fadeOut(150);
+      }
+      updateMessages() ;
+    }
+  })
     };
-
+*/
     api_ajax("/rooms/join", sendInfo, {
         success: function (data) {
             console.log("1 = Kirjautuminen onnistui, 0 = epäonnistui");
             console.log("Tulos:"+data.result);
             if(data.result === 1){
                 //Onko käyttäjä huoneessa 1 = on, 0 = ei
-                setCookie("loggedIn","1");
-                connectSocket();
+                $('#roomSelected').fadeOut(150);
+                 clearFields();
+                  $('#chooseNameForm').delay(150).fadeIn(150);
+                  setCookie("loggedIn","1",)
+                  connectSocket();
+              } else {
+                  $('#wrong-password').fadeIn(150);
+                  $('#wrong-password').delay(5000).fadeOut(150);
+              }
             }
             updateMessages();
         }
