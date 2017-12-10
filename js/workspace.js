@@ -6,26 +6,70 @@ const non_input_keys = toSet(mode_keys, lock_keys, function_keys);
 
 
 /**
+ * @typedef {Object} UpdateIn
+ * @property {int} update_id
+ * @property {string} mode
+ * @property {int} pos
+ * @property {int} len
+ * @property {string} input
+ */
+
+/**
+ * @typedef {Object} UpdateOut
+ * @property {int} pos
+ * @property {int} last_update_id
+ * @property {string} insert
+ * @property {int} remove
+ */
+
+/**
+ * @callback GetWorkspaceContent
+ * @param {Object} result
+ * @param {string} result.content
+ * @param {int} result.last_update
+ */
+
+/**
+ * @callback EditWorkspace
+ * @param {UpdateOut} input
+ */
+
+/**
+ * @callback GetWorkspaceUpdates
+ * @param {Object} result
+ * @param {int} result.caret_pos
+ * @param {UpdateIn[]} result.updates
+ */
+
+
+/**
  *
  * @param {Element} textarea
+ * @param {int} user_id
+ * @param {GetWorkspaceContent} get_content_cb
+ * @param {EditWorkspace} edit_cb
+ * @param {GetWorkspaceUpdates} get_updates_cb
  * @constructor
  */
-var WorkspaceHandler = function (textarea) {
+var Workspace = function (textarea, user_id, get_content_cb, edit_cb, get_updates_cb) {
     var replace_mode = 0; //0 == false, 1 == true, 2 == primed for false (for catching input before deselect)
     var replace_range = {start:0, end:0};
     var prev_content = "";
 
-    var sync_content = "";
-    var pending_updates_in = [];
-    var pending_updates_out = [];
-    var count_my_updates_currently_processed_by_server = 0;
+    init();
 
-    // textarea.readOnly = true;
-    textarea.value = "";
-    bindEvents();
-    // syncContent();
-    textarea.readOnly = false;
+    //INITIALIZATION:
 
+    function init() {
+        // textarea.readOnly = true;
+        textarea.value = "";
+        bindEvents();
+        get_content_cb(function (result) {
+            textarea.value = prev_content = result.content;
+            last_update_id = result.last_update_id;
+            textarea.readOnly = false;
+        });
+    }
 
     function bindEvents() {
 
@@ -91,6 +135,7 @@ var WorkspaceHandler = function (textarea) {
         });
     }
 
+
     //INPUT HANDLERS & READERS:
 
     function deselectPrime(){
@@ -115,7 +160,7 @@ var WorkspaceHandler = function (textarea) {
 
     function backspace(pos) {
         if (!replace_mode) {
-            socketWorkspaceRemove(pos, 1);
+            bufferRemoval(pos, 1);
             console.log("Backspace at " + pos);
         }
     }
@@ -125,45 +170,74 @@ var WorkspaceHandler = function (textarea) {
         if(replace_mode) {
             var pos = replace_range['end'];
             len = replace_range['end'] - replace_range['start'];
-            socketWorkspaceRemove(pos, len);
+            bufferRemoval(pos, len);
             console.log("Removed " + len + " left of " + pos);
         }
         return len;
     }
 
     function insert(pos, content) {
-        socketWorkspaceInsert(pos, content);
+        bufferInsert(pos, content);
     }
 
     function revertInput() {
         textarea.value = prev_content;
     }
 
+
     //SYNCHRONIZATION:
+
+    var sync_content = "";
+    var last_update_id = -1;
+    var server_has_updates = true;
+    var is_polling_updates = false;
+
+    var pending_updates_in = [];
+    var pending_updates_out = [];
+    var count_my_updates_currently_processed_by_server = 0;
+
+    function bufferRemoval(pos, len){
+        pos = getCaretPosForSyncedContent(pos);
+        var update = {
+            pos: pos,
+            remove: len,
+            since: last_update_id
+        };
+        pending_updates_out.push(update);
+        edit_cb(update);
+    }
+
+    function bufferInsert(pos, content){
+        pos = getCaretPosForSyncedContent(pos);
+        var update = {
+            pos: pos,
+            insert: content,
+            since: last_update_id
+        };
+        pending_updates_out.push(update);
+        edit_cb(update);
+    }
+
+    this.lazyUpdate = function () {
+        server_has_updates = true;
+    };
+
+
+    function syncContent() {
+        getWorkspaceUpdates(pending_updates_out, last_update_id, function (updates, caret_pos) {
+            is_polling_updates = true;
+            textarea.readOnly = true;
+            var count_my_updates_processed = countMyUpdates(updates);
+            if (count_my_updates_currently_processed_by_server - count_my_updates_processed === 0) {
+
+            }
+            textarea.readOnly = false;
+            is_polling_updates = false;
+        });
+    }
 
 
 };
-
-//SOCKET CALLS:
-
-function socketWorkspaceRemove(pos, len) {
-    var params = {
-        pos: pos,
-        remove: len,
-        //since: getCurrentWorkspaceUpdateID()}; //todo
-    }
-    //socketEmit("edit workspace", params); //todo
-}
-
-function socketWorkspaceInsert(pos, content) {
-    var params = {
-        pos: pos,
-        insert: content,
-        //since: getCurrentWorkspaceUpdateID()}; //todo
-    }
-    //socketEmit("edit workspace", params); //todo
-}
-
 
 //GENERIC HELPERS:
 
