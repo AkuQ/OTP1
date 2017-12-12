@@ -42,7 +42,6 @@ function getCookie(field) {
 //Hae aika
 function getTime(){
   $.post("/api/get_time", function(data){
-    console.log(data);
     return data;
   })
 }
@@ -104,7 +103,6 @@ function joinRoom(){
     chat_id:getCookie('chatID'),
     user_id: getCookie('userID'),
     password: password
-    //password: $("#passwordRequired").val()
     };
 
     api_ajax("/rooms/join", sendInfo, {
@@ -277,8 +275,8 @@ function updateMessages(){
       success: function (data) {
           console.log(data);
           for(var i=0; i<data.result.length; i++){
-              $("#messagelist").append("<li>"+getTime()+
-                  " ||| "+users[data.result[i].user_id].name
+              $("#messagelist").append("<li>"+users[data.result[i].user_id].name
+              +" says:"              
                   +"<br>"+ data.result[i].message
                   +"</li>");
           }
