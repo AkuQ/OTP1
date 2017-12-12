@@ -70,7 +70,8 @@ $('#chooseRoom-button').click(function() {
       $('#modal').modal('toggle');
     }  */
     $('#back-arrow').addClass('invisible');
-    $('#choosename-button').prop('disabled', true)
+    $('#choosename-button').prop('disabled', true);
+    $('#modal').modal('toggle');
 });
 
 //Create room -valikkoon
@@ -98,7 +99,8 @@ $('#EnterRoom').click(function() {
   clearFeedback();
   clearFields();
   $('#createRoom, #EnterRoom, #feedback div, #feedback div *, #dismiss-glyphicon').fadeOut(150);
-  $('#createdRoomsContainer').delay(150).fadeIn(150);
+  //$('#createdRoomsContainer').delay(150).fadeIn(150);
+  $('#chooseNameForm').delay(150).fadeIn(150);
   $('.roomSelected').removeClass('roomSelected');
   $('#back-arrow').removeClass('invisible');
 });
@@ -130,7 +132,7 @@ $('#enter-now-button').click(function() {
   var createdRoom = $('#createdRoom').html();
   $("#roomSelected p").html(createdRoom);
   $('#chooseRoom-button').prop('disabled', false);
-})
+});
 
 //huoneen valinta -hover
 /*
@@ -280,9 +282,8 @@ $('#username').keyup(function() {
 //huoneiden listaus
 $('#choosename-button').click(function() {
   clearFeedback();
-  $('#chooseNameForm').hide();
-  //$('#createdRoomsContainer').delay(150).fadeIn(150);
-  $('#modal').modal('toggle');
+  $('#chooseNameForm').fadeOut(150);
+  $('#createdRoomsContainer').delay(150).fadeIn(150);
 });
 
 //Huoneen hakeminen
