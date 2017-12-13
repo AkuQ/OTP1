@@ -41,8 +41,10 @@
 
             <!--2 Huoneeseen liittyminen -->
             <div id="createdRoomsContainer">
+              <p>Choose room</p>
               <input id="roomSearch" type="text" maxlength="20" placeholder="search room">
               <ul id="createdRooms" class="multi-column">
+                <li class="listedRoom listedRoom-hover">huone</li>
               </ul>
               <!--<button id="chooseRoom-button" class="btn btn-default chooseRoom-hover" onclick="joinRoom()" disabled>Enter Room</button>-->
             </div>
@@ -64,11 +66,19 @@
 
             <div id="feedback">
             -  <p id="short-roomName">Your room name is too short. At least four characters is required.</p>
-                <p id="roomCreatedMessage">You successfully created room<strong></strong></p>
+                <div>
+                  <span id="roomCreatedMessage">You successfully created room</span>
+                  <br>
+                  <strong id="createdRoom"></strong>
+                  <br>
+                  <span id="dismiss-glyphicon" class="glyphicon glyphicon-remove btn"></span>
+                  <button id="enter-now-button" class="btn btn-default chooseRoom-hover roomCreated-button">Join</button>
+                </div>
                 <p id="short-username">Your username is too short. At least five characters is required.</p>
                 <p id="htmlRemoved">Character sequence not allowed.</p>
                 <p id="spacesRemoved">Spaces not allowed.</p>
-                <p id="short-password">Your password is too short. At least five characters is required.</p>
+                <p id="short-password">Your password is too short. At least six characters is required.</p>
+                <p id="wrong-password">Wrong password</p>
             </div>
 
       </div>
@@ -84,7 +94,7 @@
     <div class="col-xs-12 col-sm-8" id="leftContent">
     <span class="glyphicon glyphicon glyphicon-user menu" id="users" onclick="listUsers()"><span id="users-amount">1</span><span class="tooltiptext">Users</span></span>
       <span class="glyphicon glyphicon-menu-hamburger menu" id="menuBtn"></span>
-        <span class="glyphicon glyphicon-log-out menu" id="logout" onclick="leaveRoom()"><span class="tooltiptext">Logout</span></span>
+        <span class="glyphicon glyphicon-log-out menu" id="logout" onclick="leaveRoom()"><span class="tooltiptext">Leave</span></span>
         <span class="glyphicon glyphicon glyphicon-download menu" id="download"><span class="tooltiptext">Download</span></span>
       <span class="glyphicon glyphicon-menu-left" id="leftArrow" onclick="openDesk()"></span>
 
@@ -126,6 +136,9 @@
 
   </div>
 </div>
+  <script>
+  var room = undefined;
+  </script>
   <script src="js/expand.js"></script>
   <script src="js/modal.js"></script>
   <script src="js/chat.js"></script>
