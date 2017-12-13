@@ -71,6 +71,7 @@ function listUsers(){
               $("#userlist").append("<li>" + data.result[i].name + "</li>");
           }
           userCount = data.result.length;
+          $("#users-amount").html(userCount);
 
       }
   });
@@ -91,6 +92,7 @@ function createRoom(){
 }
 
 function joinRoom(){
+  $("#messagelist").html("");
   listUsers();
   console.log("joinRoom() kutsuttu");
   let password = $("#passwordRequired").val();
@@ -129,7 +131,7 @@ function joinRoom(){
 
 function connectSocket() {
   socket = io("http://10.114.34.17:5000/", {query: {chat_id: getCookie('chatID'), user_id: getCookie('userID'), token:"asd"}});
-    var ws = new Workspace($("#working-area"), fetchWorkspace, editWorkSpace, updateWorkspace);
+    var ws = new Workspace(document.getElementById("working-area"), fetchWorkspace, editWorkSpace, updateWorkspace);
 
 
   socket.on('update workspace', (param) => {
@@ -169,7 +171,7 @@ function sendMessage() {
 
 function editWorkSpace(params) {
     socket.emit('edit workspace', params);
-    
+
 }
 
 function leaveRoom(){
@@ -337,4 +339,4 @@ function api_ajax(route, data_params, ajax_params){
         dataType: "json"
     }, ajax_params);
     $.ajax(call);
-}}
+}
