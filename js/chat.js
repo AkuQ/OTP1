@@ -11,6 +11,7 @@ var users = {};
 window.onload = function(){
   if(getCookie("loggedIn") == 1){
     $('#modal').modal('toggle');
+    listUsers();
     joinRoom();
   }
 }
@@ -18,7 +19,6 @@ window.onload = function(){
 // Aseta keksi, field = keksin nimi ja value = keksin arvo
 function setCookie(field,value) {
   document.cookie = field+"="+value+";";
-  console.log(document.cookie);
 }
 
 // Hae keksi nimellä, palauttaa pelkän arvon
@@ -34,21 +34,18 @@ function getCookie(field) {
             return c.substring(name.length, c.length);
         }
     }
-    console.log(c);
     return null;
 }
 
 //Hae aika
 function getTime(){
   $.post("/api/get_time", function(data){
-    console.log(data);
     return data;
   })
 }
 
 //Lisää käyttäjän kantaan ja palauttaa ID:n
 function createUser(){
-  console.log("createUser() called");
   var sendInfo = {
     name : $('#username').val()
   };
@@ -62,14 +59,12 @@ function createUser(){
 
 //Listaa käyttäjät ja lisää ne #group-users elementtiin listamuodossa.
 function listUsers(){
-  console.log("listUsers() called");
   var sendInfo = {
       chat_id: getCookie('chatID')
     };
 
   api_ajax("/users/list", sendInfo, {
       success: function (data) {
-          console.log(data.error);
           //console.log(data);
           for(var i=userCount; i<data.result.length; i++){
               //users.push(data.result[i].name);
@@ -99,6 +94,7 @@ function createRoom(){
 function joinRoom(){
   console.log("joinRoom() kutsuttu");
   let password = $("#passwordRequired").val();
+  console.log("Salasana: "+password);
   var sendInfo = {
     chat_id:getCookie('chatID'),
     user_id: getCookie('userID'),
@@ -127,7 +123,8 @@ function joinRoom(){
               }
               updateMessages();
             }
-        })
+        });
+    }
 
 
 function connectSocket() {
@@ -176,7 +173,6 @@ function editWorkSpace(params) {
 }
 
 function leaveRoom(){
-  console.log("leaveRoom() kutsuttu");
   var sendInfo = {
     chat_id:getCookie('chatID'),
     user_id: getCookie('userID')
@@ -195,11 +191,9 @@ function leaveRoom(){
 }
 
 function listRooms(){
-  console.log("Listrooms called");
 
   api_ajax("/rooms/list", {}, {
       success: function (data) {
-          console.log("Error: "+data.result.error);
           for(var i = roomCount; i < data.result.length; i++){
 
               // Luodaan HTML -elementti, jolle asetetaan luokka ja onClick
@@ -214,7 +208,6 @@ function listRooms(){
           // Tällä pidetään kirjaa "rooms" listan pituudesta, ja estetään
           // huoneiden tuominen listaan kahteen kertaan.
           roomCount = data.result.length;
-          console.log("Huoneita listassa: "+roomCount);
       }
   });
 }
@@ -228,12 +221,14 @@ function updateMessages(){
 
   api_ajax("/messages/list", sendInfo, {
       success: function (data) {
-          console.log(data);
+        console.log(data.result[0]);
+        console.log(users[data.result[0].user_id].name);
+        //users[data.result[i].user_id].name
           for(var i=0; i<data.result.length; i++){
-              $("#messagelist").append("<li>"+getTime()+
-                  " ||| "+users[data.result[i].user_id].name
-                  +"<br>"+ data.result[i].message
-                  +"</li>");
+              $("#messagelist").append("<li><i>"+users[data.result[i].user_id].name
+              +" says:"
+              +"</i><br>"+ data.result[i].message
+              +"</li>");
           }
           lastMessage = data.result.length;
       }
