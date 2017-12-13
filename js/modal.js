@@ -63,7 +63,6 @@ $('#chooseRoom-button').click(function() {
     clearFeedback();
     $('#back-arrow').addClass('invisible');
     $('#choosename-button').prop('disabled', true);
-    $('#modal').modal('toggle');
 });
 
 //Create room -valikkoon
@@ -92,6 +91,11 @@ $('#EnterRoom').click(function() {
   clearFields();
   $('#createRoom, #EnterRoom, #feedback div, #feedback div *, #dismiss-glyphicon').fadeOut(150);
   //$('#createdRoomsContainer').delay(150).fadeIn(150);
+  if(getCookie('userID') == undefined ){
+    $('#chooseNameForm').delay(150).fadeIn(150);
+  } else {
+    $('#createdRoomsContainer').delay(150).fadeIn(150);
+  }
   $('#chooseNameForm').delay(150).fadeIn(150);
   $('.roomSelected').removeClass('roomSelected');
   $('#back-arrow').removeClass('invisible');
