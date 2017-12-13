@@ -71,7 +71,6 @@ $('#chooseRoom-button').click(function() {
     }  */
     $('#back-arrow').addClass('invisible');
     $('#choosename-button').prop('disabled', true);
-    $('#modal').modal('toggle');
 });
 
 //Create room -valikkoon
