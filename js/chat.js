@@ -108,12 +108,12 @@ function joinRoom(){
             console.log("Tulos:"+data.result);
             if(data.result === 1){
                 //Onko käyttäjä huoneessa 1 = on, 0 = ei
-                  $('#roomSelected').fadeOut(150);
+                  $('#roomSelected').fadeOut(150);/*
                   if(getCookie('userID') == undefined ){
                     $('#chooseNameForm').delay(150).fadeIn(150);
-                  } else {
+                  } */
                     $('#modal').modal('toggle');
-                  }
+
                   clearFields();
                   setCookie("loggedIn","1",)
                   connectSocket();
