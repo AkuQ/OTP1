@@ -7,7 +7,6 @@ var rooms = document.getElementById("createdRooms");
 var roomCount = 0;
 var userCount = 0;
 var users = {};
-var textbuffer = "";
 
 window.onload = function(){
   if(getCookie("loggedIn") == 1){
@@ -133,9 +132,11 @@ function joinRoom(){
 
 function connectSocket() {
   socket = io("http://10.114.34.17:5000/", {query: {chat_id: getCookie('chatID'), user_id: getCookie('userID'), token:"asd"}});
+    var ws = new Workspace($("#working-area"), fetchWorkspace, editWorkSpace, updateWorkspace);
 
-  socket.on('update workspace', () => {
-       updateWorkspace();
+
+  socket.on('update workspace', (param) => {
+       ws.notify(param.update_id);
       });
 
 
@@ -144,69 +145,17 @@ function connectSocket() {
   });
 
 
-  function update() {
-     // text = document.getElementById("text").value;
-     // socket.emit('update', text);
-  }
-
-
   socket.on('update messages', function() {
-    console.log("päivitä viestejä");
     updateMessages();
   });
 
   socket.on('update users', function(user) {
-    // $("#userlist").append("<li>" + user.name + "</li>");
       listUsers();
   });
 
   socket.on('user disconnect', function() {
       listUsers();
   });
-
-
-  var input = document.getElementById("working-area");
-  /*
-  input.addEventListener("keypress", function () {
-    var pos = this.selectionStart;
-    var char = $("#working-area").val().charAt(pos);
-
-      var update = {
-        chat_id: getCookie('chatID'),
-        since: getCookie('lastUpdate'),
-        caret_pos: pos,
-        pos: pos,
-        input: char
-      }
-
-    socket.emit("edit workspace", update);
-  });
-*/
-  input.on('keypress', function() {
-      var pos = this.selectionStart;
-      var char = $("#working-area").val().charAt(pos);
-
-      var update = {
-        since: getCookie('lastUpdate'),
-        pos: pos,
-        insert: char
-      }
-      console.log(update);
-
-    socket.emit("edit workspace", update);
-  }).on('keydown', function(e) {
-    if (e.keyCode==8)
-    var pos = this.selectionEnd;
-
-      var update = {
-        since: getCookie('lastUpdate'),
-        pos: pos,
-        remove: 1
-      }
-      console.log(update);
-      socket.emit("edit workspace", update);
-  });
-
 
 }
 
@@ -219,6 +168,11 @@ function sendMessage() {
                     /*token: getCookie('token')*/};
     socket.emit('post message', msg);
     $("#textArea").val("");
+}
+
+function editWorkSpace(params) {
+    socket.emit('edit workspace', params);
+    
 }
 
 function leaveRoom(){
@@ -286,39 +240,24 @@ function updateMessages(){
   });
 }
 
-function fetchWorkspace() {
-  var sendInfo = {
-    chat_id: getCookie('chatID')
-  };
+function fetchWorkspace(sendInfo, callback) {
 
   api_ajax("/workspaces/content", sendInfo, {
       success: function (data) {
-          $("#working-area").text(data.result.content);
-          setCookie("lastUpdate", content.result.last_update);
+          callback(data);
       }
   });
 }
 
-function updateWorkspace() {
-  var sendInfo = {
-    chat_id: getCookie('chatID'),
-    since: getCookie('lastUpdate'),
-    caret_pos: 2
-  };
-
+function updateWorkspace(sendInfo, callback) {
   api_ajax("/workspaces/updates", sendInfo, {
       success: function (data) {
-          $("#working-area").text(data.content);
-          setCookie("lastUpdate", data.result.updates.id);
-          if (data.result.updates.mode === "insert") {
-              inputWorkspaceText({text:data.result.updates.input, pos:data.result.updates.pos})
-          } else {
-              removeWorkspaceText(data.result.updates.pos, data.result.updates.len);
-          }
+        callback(data);
       }
   });
 }
 
+/*
 function workspaceInsert(pos) {
 
   var input = $("#working-area").val().charAt(pos);
@@ -352,7 +291,6 @@ function workspaceRemove(obj) {
         }
     });
   }
-/*
 function sendMessage(){
   console.log("SendMessage() kutsuttu");
   var sendInfo = {
@@ -373,7 +311,6 @@ function sendMessage(){
   })
   updateMessages();
   $("#textArea").val() = "";
-  */
 
 // Helper functions:
 
@@ -394,6 +331,7 @@ function removeWorkspaceText(pos, len) {
 }
 
 // API handler:
+  */
 
 function api_ajax(route, data_params, ajax_params){
     var call = Object.assign({
@@ -404,4 +342,4 @@ function api_ajax(route, data_params, ajax_params){
         dataType: "json"
     }, ajax_params);
     $.ajax(call);
-}
+}}
