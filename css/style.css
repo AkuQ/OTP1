@@ -53,6 +53,16 @@ body {
   height: 100%;
   -moz-border-right: thick groove #666666;
   border-radius: 2px;
+  color: rgb(232, 232, 232);
+}
+
+#messagelist {
+  padding-left: 5px;
+}
+
+#messagelist > li {
+  list-style-type: none;
+  font-size: 12px;
 }
 
 #rightContent{
@@ -200,12 +210,12 @@ color: #999999;
 }
 
 .arrow {
-    color: #666666 !important;
+    color: rgb(160,160,160) !important;
     font-size: 24px !important;
 }
 
 .arrow:hover {
-color: #999999 !important;
+color: rgb(200,200,200) !important;
 }
 /* input kentät */
 #roomName, #username, #roomPassword, #roomPasswordAgain, #roomSearch, #passwordRequired {
@@ -297,6 +307,10 @@ color: #999999;
   margin-top: 5px;
 }
 
+#feedback {
+  margin-top: 20px;
+}
+
 #feedback p{
     margin-top: 10px;
     color: white;
@@ -304,9 +318,19 @@ color: #999999;
     background-color: rgba(0,0,0,0.6) !important;
 }
 
+#feedback strong{
+    margin-top: 10px;
+    color: white;
+    font-size: 20px;
+    background-color: rgba(0,0,0,0.6) !important;
+    font-weight: normal;
+}
+
+
 #roomCreatedMessage {
   color: lightgreen !important;
   font-size: 18px !important;
+  background-color: rgba(0,0,0,0.6) !important;
 }
 
 #roomCreatedMessage strong{
@@ -314,6 +338,25 @@ color: #999999;
   font-size: 20px !important;
   white-space:nowrap;
   font-weight: normal;
+}
+
+#enter-now-button {
+  background-color: rgb(120,142,197);
+  color:rgb(220,232,255);
+  border: 1px solid rgb(68,100,168);
+  display: inline-block;
+  max-width: 80%;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+#dismiss-glyphicon {
+  font-size: 20px;
+  color: white;
+  margin-right: 15px;
+  display: inline-block;
+  margin-top: 10px;
+  margin-top: 10px;
 }
 
 .menu .tooltiptext {
@@ -400,12 +443,7 @@ p {
 
 }
 
-table {
-    width: 250px;
-    min-width: 100px;
-}
-
-ul p, form p, #roomSelected p {
+ul p, form p, #roomSelected p, #createdRoomsContainer p {
     font-size: 18px;
     color:rgb(220,232,255);
     font-weight: normal;
@@ -423,6 +461,10 @@ form p {
   margin-bottom: 10px;
   width: 300px;
   max-width: 90%;
+}
+
+#createdRoomsContainer p {
+  margin-bottom: 10px;
 }
 
 tr {
