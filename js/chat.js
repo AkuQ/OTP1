@@ -12,6 +12,7 @@ var textbuffer = "";
 window.onload = function(){
   if(getCookie("loggedIn") == 1){
     $('#modal').modal('toggle');
+    listUsers();
     joinRoom();
   }
 }
@@ -266,11 +267,13 @@ function updateMessages(){
 
   api_ajax("/messages/list", sendInfo, {
       success: function (data) {
+        console.log(data.result[0]);
+        console.log(users[data.result[0].user_id].name);
         //users[data.result[i].user_id].name
           for(var i=0; i<data.result.length; i++){
-              $("#messagelist").append("<li>"+data.result[i].user_id
+              $("#messagelist").append("<li><i>"+users[data.result[i].user_id].name
               +" says:"
-              +"<br>"+ data.result[i].message
+              +"</i><br>"+ data.result[i].message
               +"</li>");
           }
           lastMessage = data.result.length;
