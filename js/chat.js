@@ -12,7 +12,6 @@ var textbuffer = "";
 window.onload = function(){
   if(getCookie("loggedIn") == 1){
     $('#modal').modal('toggle');
-    listUsers();
     joinRoom();
   }
 }
@@ -93,6 +92,7 @@ function createRoom(){
 }
 
 function joinRoom(){
+  listUsers();
   console.log("joinRoom() kutsuttu");
   let password = $("#passwordRequired").val();
   console.log("Salasana: "+password);
