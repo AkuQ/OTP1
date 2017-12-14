@@ -252,7 +252,7 @@ var Workspace = function (textarea, user_id, chat_id, getWorkspaceContent, editW
 
     window.setInterval(fetchUpdates, 1000);
 
-                                           updates
+
     function syncUpdates(updates, caret_pos) {
         updates.forEach(function (u) {
             if(u.mode.toLowerCase().trim() === "insert") {
