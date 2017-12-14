@@ -104,7 +104,6 @@ $('#EnterRoom').click(function() {
   } else {
     $('#createdRoomsContainer').delay(150).fadeIn(150);
   }
-  $('#chooseNameForm').delay(150).fadeIn(150);
   $('.roomSelected').removeClass('roomSelected');
   $('#back-arrow').removeClass('invisible');
 });
