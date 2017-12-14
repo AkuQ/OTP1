@@ -92,7 +92,6 @@ function createRoom(){
 }
 
 function joinRoom(){
-  $("#messagelist").html("");
   console.log("joinRoom() kutsuttu");
   let password = $("#passwordRequired").val();
   console.log("Salasana: "+password);
@@ -215,10 +214,11 @@ function listRooms(){
 }
 
 function updateMessages(){
+  $("#messagelist").html("");
   console.log("updateMessages() kutsuttu")
   var sendInfo = {
       chat_id: getCookie('chatID'),
-      since: lastMessage
+      since: 0 //lastMessage
     };
 
   api_ajax("/messages/list", sendInfo, {
@@ -232,7 +232,7 @@ function updateMessages(){
               +"</i><br>"+ data.result[i].message
               +"</li>");
           }
-          lastMessage = data.result.length;
+          //lastMessage = data.result.length;
       }
   });
 }
