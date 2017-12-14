@@ -25,9 +25,9 @@ const non_input_keys = toSet(mode_keys, lock_keys, function_keys);
 
 /**
  * @callback GetWorkspaceContent
- * @param {Object} result
- * @param {string} result.content
- * @param {int} result.last_update
+ * @param {Object} params
+ * @param callback
+ *
  */
 
 /**
@@ -40,6 +40,7 @@ const non_input_keys = toSet(mode_keys, lock_keys, function_keys);
  * @param {Object} result
  * @param {int} result.caret_pos
  * @param {UpdateIn[]} result.updates
+ * @param callback
  */
 
 
@@ -52,7 +53,8 @@ const non_input_keys = toSet(mode_keys, lock_keys, function_keys);
  * @param {GetWorkspaceUpdates} getWorkspaceUpdates
  * @constructor
  */
-var Workspace = function (textarea, user_id, getWorkspaceContent, editWorkspace, getWorkspaceUpdates) {
+var Workspace = function (textarea, user_id, chat_id, getWorkspaceContent, editWorkspace, getWorkspaceUpdates) {
+
     var replace_mode = 0; //0 == false, 1 == true, 2 == primed for false (for catching input before deselect)
     var replace_range = {start:0, end:0};
     var prev_content = "";
@@ -65,9 +67,9 @@ var Workspace = function (textarea, user_id, getWorkspaceContent, editWorkspace,
         textarea.readOnly = true;
         textarea.value = "";
         bindEvents();
-        getWorkspaceContent(function (result) {
+        getWorkspaceContent({chat_id: chat_id, user_id: user_id}, function (result) {
             textarea.value = prev_content = result.content;
-            synced_update_id = result.last_update;
+            synced_update_id = result.result.last_update;
             textarea.readOnly = false;
         });
     }
@@ -148,21 +150,18 @@ var Workspace = function (textarea, user_id, getWorkspaceContent, editWorkspace,
     function deselectTrigger(){
         if (replace_mode === 2) {
             replace_mode = 0;
-            console.log("Deselected");
         }
     }
 
     function deselect() {
         if (replace_mode !== 0) {
             replace_mode = 0;
-            console.log("Deselected");
         }
     }
 
     function backspace(pos) {
         if (!replace_mode) {
             bufferRemoval(pos, 1);
-            console.log("Backspace at " + pos);
         }
     }
 
@@ -172,7 +171,6 @@ var Workspace = function (textarea, user_id, getWorkspaceContent, editWorkspace,
             var pos = replace_range['end'];
             len = replace_range['end'] - replace_range['start'];
             bufferRemoval(pos, len);
-            console.log("Removed " + len + " left of " + pos);
         }
         return len;
     }
@@ -193,8 +191,6 @@ var Workspace = function (textarea, user_id, getWorkspaceContent, editWorkspace,
     var available_update_id = -1;
     var is_polling_updates = false;
 
-    var pending_updates_in = [];
-    var pending_updates_out = [];
     var count_my_updates_currently_processed_by_server = 0;
 
     function bufferRemoval(pos, len){
@@ -202,7 +198,7 @@ var Workspace = function (textarea, user_id, getWorkspaceContent, editWorkspace,
             pos: parseInt(pos),
             remove: len,
             insert: null,
-            since: last_update_id
+            since: synced_update_id
         };
         count_my_updates_currently_processed_by_server++;
         editWorkspace(update);
@@ -213,26 +209,26 @@ var Workspace = function (textarea, user_id, getWorkspaceContent, editWorkspace,
             pos: pos,
             insert: content,
             remove: null,
-            since: last_update_id
+            since: synced_update_id
         };
         count_my_updates_currently_processed_by_server++;
         editWorkspace(update);
     }
 
     this.notify = function (update_id) {
-        available_update_id = update_id;
-        window.setTimeout(fetchUpdates, 1000);
+        available_update_id = update_id > available_update_id ? update_id : available_update_id;
     };
 
-
     function fetchUpdates() {
+        console.log("update workspace... " + synced_update_id + " > " + available_update_id + ", is polling: " + is_polling_updates);
         if(available_update_id > synced_update_id && !is_polling_updates) {
             is_polling_updates = true;
             var caret_pos = textarea.selectionStart;
 
-            getWorkspaceUpdates(function (result) {
-                var new_caret_pos = result.caret_pos;
-                var updates = result.updates;
+            getWorkspaceUpdates({since: synced_update_id, chat_id: chat_id, user_id: user_id, caret_pos: caret_pos}, function (result) {
+                console.log("done " + synced_update_id);
+                var new_caret_pos = result.result.caret_pos;
+                var updates = result.result.updates;
                 var count_my_updates_returned = updates.filter(function (u) {
                     return u.user_id === user_id
                 }).length;
@@ -242,21 +238,25 @@ var Workspace = function (textarea, user_id, getWorkspaceContent, editWorkspace,
                     caret_pos === textarea.selectionStart
                 ) {
                     textarea.readOnly = true;
+                    console.log("wp locked...");
                     count_my_updates_currently_processed_by_server = 0;
                     syncUpdates(updates,new_caret_pos);
                 }
-                else {
-                    window.setTimeout(fetchUpdates, 1000);
-                }
+
                 textarea.readOnly = false;
+                console.log("wp writable...");
                 is_polling_updates = false;
             });
         }
     }
 
+    window.setInterval(fetchUpdates, 1000);
+
+                                           updates
     function syncUpdates(updates, caret_pos) {
         updates.forEach(function (u) {
             if(u.mode.toLowerCase().trim() === "insert") {
+                console.log("IN: " + u.input);
                 sync_content = [sync_content.slice(0, u.pos), u.input, sync_content.slice(u.pos)].join();
             }
             else if (u.mode.toLowerCase().trim() === "remove") {
@@ -265,7 +265,8 @@ var Workspace = function (textarea, user_id, getWorkspaceContent, editWorkspace,
             else {
                 throw new Error("Unknown workspace update mode value: " + u.mode);
             }
-            synced_update_id = u.update_id;
+            console.log(u);
+            synced_update_id = u.id;
         });
         textarea.value = sync_content;
         textarea.selectionStart = caret_pos;
