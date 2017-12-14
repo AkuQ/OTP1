@@ -93,7 +93,6 @@ function createRoom(){
 
 function joinRoom(){
   $("#messagelist").html("");
-  listUsers();
   console.log("joinRoom() kutsuttu");
   let password = $("#passwordRequired").val();
   console.log("Salasana: "+password);
@@ -124,6 +123,7 @@ function joinRoom(){
                   $('#wrong-password').delay(5000).fadeOut(150);
               }
               updateMessages();
+              listUsers();
             }
         });
     }
